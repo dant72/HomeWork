@@ -1,0 +1,23 @@
+@model HttpModels.ICatalog
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Add Categoty</h2>
+<form method="post">
+    Name:<input type="text" name="name" value="" required />
+    <br/>
+    <input type="submit" name="submit" value="Create"/>
+    <br/>
+</form>
+
+<ul>
+    @foreach (var @category in @Model.Categories)
+    {
+        <li>
+            <div style="font-size: 40px;">@category.Id  @category.Name</div>
+        </li>
+    }
+</ul>

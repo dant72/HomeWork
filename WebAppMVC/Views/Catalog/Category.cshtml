@@ -1,0 +1,17 @@
+@model System.Collections.Generic.List<HttpModels.Product>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>@Model.First().Category.Name</h2>
+<ul>
+@foreach (var product in @Model)
+{
+    <li>
+        <img src="@product.Image" width="100" height="100"/>
+        <div>@product.Name :: @product.Price</div>
+    </li>
+}
+</ul>

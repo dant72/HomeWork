@@ -1,0 +1,15 @@
+@model HttpModels.IMyTime
+
+@{
+    ViewData["Time"] = @Model.LocalTime.ToString();
+}
+
+<form method="post">
+    <select type="text" id="timeZone" name="timeZone" value="" asp-items="@(new SelectList(TimeZoneInfo.GetSystemTimeZones(),  nameof(TimeZoneInfo.Id), nameof(TimeZoneInfo.DisplayName), nameof(TimeZoneInfo.Id)))"></select>
+    <br/>
+    <input type="submit" name="submit" value="Show time"/>
+    <br/>
+</form>
+
+
+<div> @Model.TimeZone.DisplayName - @Model.LocalTime.ToString()</div>

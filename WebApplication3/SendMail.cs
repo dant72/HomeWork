@@ -1,4 +1,5 @@
 using System.Net;
+using Microsoft.Extensions.Options;
 
 namespace WebApplication3;
 using System.Net.Mail;
@@ -7,14 +8,16 @@ public class SendMail : ISendMail
 {
     private string userName;
     private SmtpClient SmtpClient { set; get; }
+    private SmtpCredentials _smtpCredentials;
 
-    public SendMail()
+    public SendMail(IOptions<SmtpCredentials> options)
     {
-        userName = "asp2022@rodion-m.ru";
-        SmtpClient =  new SmtpClient("smtp.beget.com")
+        _smtpCredentials = options.Value;
+        userName = _smtpCredentials.UserName;
+        SmtpClient =  new SmtpClient(_smtpCredentials.Host)
         {
             Port = 25,
-            Credentials = new NetworkCredential(userName, "aHGnOlz7"),
+            Credentials = new NetworkCredential(userName, _smtpCredentials.Password),
             EnableSsl = true
         };
     }
@@ -30,9 +33,22 @@ public class SendMail : ISendMail
         };
     }
 
-    public void Send(string sendTo, string? subject, string? body)
+    public async Task<bool> Send(string sendTo, string? subject, string? body, CancellationToken stoppingToken)
     {
-        SmtpClient.SendAsync(userName,sendTo, subject, body, null);
+        //using
+        try
+        {
+            await SmtpClient.SendMailAsync(userName,sendTo, subject, body, stoppingToken);
+        }
+        catch (Exception e)
+        {
+            //Console.WriteLine(e);
+            
+            return false;
+        }
+
+
+        return true;
     }
  
 }

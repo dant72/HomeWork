@@ -5,5 +5,5 @@ namespace WebApplication3;
 public interface ISendMail
 {
     public void Setup(string host, string userName, string password);
-    public void Send(string sendTo, string? subject, string? body);
+    public async Task<bool> Send(string sendTo, string? subject, string? body, CancellationToken stoppingToken);
 }
