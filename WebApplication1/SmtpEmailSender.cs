@@ -36,18 +36,7 @@ public class SmtpEmailSender : ISmtpEmailSender
 
     public async Task Send(string sendTo, string? subject, string? body, CancellationToken stoppingToken)
     {
-        //using
-       // try
-       // {
-            await SmtpClient.SendMailAsync(userName,sendTo, subject, body, stoppingToken);
-       //     return true;
-       // }
-       // catch (Exception e)
-        //{
-            //Console.WriteLine(e);
-            
-         //   return false;
-       // }
+        await SmtpClient.SendMailAsync(userName,sendTo, subject, body, stoppingToken);
     }
  
 }
