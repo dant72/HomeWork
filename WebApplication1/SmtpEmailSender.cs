@@ -9,6 +9,7 @@ public class SmtpEmailSender : ISmtpEmailSender
     private string userName;
     private SmtpClient SmtpClient { set; get; }
     private SmtpCredentials _smtpCredentials;
+    
 
     public SmtpEmailSender(IOptions<SmtpCredentials> options)
     {
@@ -22,12 +23,12 @@ public class SmtpEmailSender : ISmtpEmailSender
         };
     }
 
-    public void Setup(string host, string userName, string password)
+    public void Setup(string host, string userName, string password, int port = 25)
     {
         this.userName = userName;
         SmtpClient = new SmtpClient(host)
         {
-            Port = 25,
+            Port = port,
             Credentials = new NetworkCredential(userName, password),
             EnableSsl = true
         };

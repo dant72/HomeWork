@@ -10,6 +10,6 @@ builder.Services.Configure<SmtpCredentials>(builder.Configuration.GetSection("Sm
 builder.Services.AddHostedService<BackService.ExampleBackgroundService>();
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/Home/Index",() => "Hello1111");
 
 app.Run();
