@@ -21,6 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\HttpModels\HttpModels.csproj" />
       <ProjectReference Include="..\WebApplication3\WebApplication3.csproj" />
     </ItemGroup>
 

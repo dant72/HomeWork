@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddSingleton<ISmtpEmailSender, SmtpEmailSender>();
+builder.Services.AddScoped<ISmtpEmailSender, SmtpEmailSender>();
 builder.Services.AddSingleton<IClock, Clock>();
 
 builder.Services.Configure<SmtpCredentials>(builder.Configuration.GetSection("SmtpCredentials"));

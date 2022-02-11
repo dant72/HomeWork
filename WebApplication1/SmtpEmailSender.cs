@@ -11,7 +11,7 @@ public class SmtpEmailSender : ISmtpEmailSender
     private SmtpCredentials _smtpCredentials;
     
 
-    public SmtpEmailSender(IOptions<SmtpCredentials> options)
+    public SmtpEmailSender(IOptionsSnapshot<SmtpCredentials> options)
     {
         _smtpCredentials = options.Value;
         userName = _smtpCredentials.UserName;
@@ -34,20 +34,20 @@ public class SmtpEmailSender : ISmtpEmailSender
         };
     }
 
-    public async Task<bool> Send(string sendTo, string? subject, string? body, CancellationToken stoppingToken)
+    public async Task Send(string sendTo, string? subject, string? body, CancellationToken stoppingToken)
     {
         //using
-        try
-        {
+       // try
+       // {
             await SmtpClient.SendMailAsync(userName,sendTo, subject, body, stoppingToken);
-            return true;
-        }
-        catch (Exception e)
-        {
+       //     return true;
+       // }
+       // catch (Exception e)
+        //{
             //Console.WriteLine(e);
             
-            return false;
-        }
+         //   return false;
+       // }
     }
  
 }
