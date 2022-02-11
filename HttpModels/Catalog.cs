@@ -8,9 +8,9 @@ public class Catalog : ICatalog
     private ConcurrentBag<Product> Products { get; set; } = new ConcurrentBag<Product>();
      public List<Category> Categories { get; set; } = new();
 
-     private readonly IMyTime _time;
+     private readonly IClock _time;
 
-    public Catalog(IMyTime time)
+    public Catalog(IClock time)
     {
         _time = time;
         Categories.Add(new Category(0,"Fruits"));

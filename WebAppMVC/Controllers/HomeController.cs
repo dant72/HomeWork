@@ -8,9 +8,9 @@ namespace WebAppMVC.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private readonly IMyTime _time;
+    private readonly IClock _time;
 
-    public HomeController(ILogger<HomeController> logger, IMyTime time)
+    public HomeController(ILogger<HomeController> logger, IClock time)
     {
         _logger = logger;
         _time = time;

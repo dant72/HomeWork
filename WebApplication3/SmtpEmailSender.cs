@@ -4,19 +4,19 @@ using Microsoft.Extensions.Options;
 namespace WebApplication3;
 using System.Net.Mail;
 
-public class SendMail : ISendMail
+public class SmtpEmailSender : ISmtpEmailSender
 {
     private string userName;
     private SmtpClient SmtpClient { set; get; }
     private SmtpCredentials _smtpCredentials;
 
-    public SendMail(IOptions<SmtpCredentials> options)
+    public SmtpEmailSender(IOptions<SmtpCredentials> options)
     {
         _smtpCredentials = options.Value;
         userName = _smtpCredentials.UserName;
         SmtpClient =  new SmtpClient(_smtpCredentials.Host)
         {
-            Port = 25,
+            Port = _smtpCredentials.Port,
             Credentials = new NetworkCredential(userName, _smtpCredentials.Password),
             EnableSsl = true
         };
@@ -39,6 +39,7 @@ public class SendMail : ISendMail
         try
         {
             await SmtpClient.SendMailAsync(userName,sendTo, subject, body, stoppingToken);
+            return true;
         }
         catch (Exception e)
         {
@@ -46,9 +47,6 @@ public class SendMail : ISendMail
             
             return false;
         }
-
-
-        return true;
     }
  
 }

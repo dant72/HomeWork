@@ -7,13 +7,15 @@ public class BackService
 {
     public class ExampleBackgroundService : BackgroundService
     {
-        private readonly ISendMail _sendMail;
-        private readonly IMyTime _time;
+        private readonly ISmtpEmailSender _smtpEmailSender;
+        private readonly IClock _time;
+        private readonly ILogger<BackService> _logger;
 
-        public ExampleBackgroundService(ISendMail sendMail, IMyTime time)
+        public ExampleBackgroundService(ILogger<BackService> logger, ISmtpEmailSender smtpEmailSender, IClock time)
         {
-            _sendMail = sendMail;
+            _smtpEmailSender = smtpEmailSender;
             _time = time;
+            _logger = logger;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -22,8 +24,9 @@ public class BackService
             var sw = Stopwatch.StartNew();
             while (await timer.WaitForNextTickAsync(stoppingToken))
             {
-                Console.WriteLine($"Сервер работает уже {sw.Elapsed}");
-                _sendMail.Send("Kuty-y4vy@yandex.ru","test service",$"{_time.LocalTime}({_time.TimeZone.DisplayName}) - Сервер работает уже {sw.Elapsed}, ({GC.GetTotalAllocatedBytes()/1024 / 1024} MB)", stoppingToken);
+                
+                bool res = await _smtpEmailSender.Send("Kuty-y4vy@yandex.ru","test service",$"{_time.LocalTime}({_time.TimeZone.DisplayName}) - Сервер работает уже {sw.Elapsed}, ({GC.GetTotalAllocatedBytes()/1024 / 1024} MB)", stoppingToken);
+                _logger.LogWarning($"Сервер работает уже {sw.Elapsed} {(res ? "Сообщение успешно доставлено" : "Сообщение не доставлено")}");
             }
         }
     }

@@ -7,7 +7,7 @@ builder.Services.AddControllersWithViews();
 
 //Абстракция    //Реализация
 builder.Services.AddSingleton<ICatalog, Catalog>();
-builder.Services.AddSingleton<IMyTime, MyTime>();
+builder.Services.AddSingleton<IClock, Clock>();
 
 
 var app = builder.Build();

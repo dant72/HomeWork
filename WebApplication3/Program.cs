@@ -3,8 +3,8 @@ using WebApplication3;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<ISendMail, SendMail>();
-builder.Services.AddSingleton<IMyTime, MyTime>();
+builder.Services.AddSingleton<ISmtpEmailSender, SmtpEmailSender>();
+builder.Services.AddSingleton<IClock, Clock>();
 
 builder.Services.Configure<SmtpCredentials>(builder.Configuration.GetSection("SmtpCredentials"));
 builder.Services.AddHostedService<BackService.ExampleBackgroundService>();

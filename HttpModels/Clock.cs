@@ -2,7 +2,7 @@ using HttpModels;
 
 namespace HttpModels;
 
-public class MyTime : IMyTime
+public class Clock : IClock
 {
     public DateTime LocalTime => TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZone);
 

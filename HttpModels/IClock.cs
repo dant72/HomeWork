@@ -1,6 +1,6 @@
 namespace HttpModels;
 
-public interface IMyTime
+public interface IClock
 {
     public DateTime LocalTime { get; }
 
