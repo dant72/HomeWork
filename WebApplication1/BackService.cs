@@ -36,11 +36,22 @@ public class BackService
                    string result = String.Empty;
                    try
                    {
-                       await srv.Send("Kuty-y4vy@yandex.ru", "test service",
-                           $"{_time.LocalTime}({_time.TimeZone.DisplayName}) - Сервер работает уже {sw.Elapsed}, ({GC.GetTotalAllocatedBytes() / 1024 / 1024} MB)",
-                           stoppingToken);
-                       result = "Сообщение успешно доставлено";
-                       _logger.LogWarning("Сервер уже работает {0} {1}", sw.Elapsed, result);
+                       try
+                       {
+                           await srv.Send("Kuty-y4vy@yandex.ru", "test service",
+                               $"{_time.LocalTime}({_time.TimeZone.DisplayName}) - Сервер работает уже {sw.Elapsed}, ({GC.GetTotalAllocatedBytes() / 1024 / 1024} MB)",
+                               stoppingToken);
+                           _logger.LogWarning("Сервер уже работает {0} {1}", sw.Elapsed, result);
+                       }
+                       catch (Exception e)
+                       {
+                           await srv.Send("Kuty-y4vy@yandex.ru", "test service", 
+                               $"{_time.LocalTime}({_time.TimeZone.DisplayName}) - Сервер работает уже {sw.Elapsed}, ({GC.GetTotalAllocatedBytes() / 1024 / 1024} MB)", 
+                               stoppingToken);
+                           result = "Повторная попытка";
+                           _logger.LogError(e, "Сервер работает уже {0} {1} {@srv}",sw.Elapsed, result);
+                       }
+
                    }
                    catch (Exception e)
                    {
