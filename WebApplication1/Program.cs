@@ -1,5 +1,6 @@
 using HttpModels;
 using WebApplication3;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,10 @@ builder.Services.AddSingleton<IClock, Clock>();
 
 builder.Services.Configure<SmtpCredentials>(builder.Configuration.GetSection("SmtpCredentials"));
 builder.Services.AddHostedService<BackService.ExampleBackgroundService>();
+
+builder.Host.UseSerilog((ctx, lc) => lc
+    .WriteTo.Console()
+    .ReadFrom.Configuration(ctx.Configuration));
 
 var app = builder.Build();
 
