@@ -2,6 +2,9 @@
 @using HttpModels
 @using System.Reflection.Metadata
 @using System.Net.Http.Headers
+@using Microsoft.AspNetCore.Http.Headers
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor httpContextAccessor
 
 @inject IClock _clock
 @inject ICatalog _catalog
@@ -12,7 +15,7 @@
 }
 
 <ul>
-     @foreach (var @category in _catalog.GetProducts( "").GroupBy(x => x.Category))
+@foreach (var @category in _catalog.GetProducts( httpContextAccessor.HttpContext.Request.Headers.UserAgent).GroupBy(x => x.Category))
      {
           <li>
                <ul><div style="font-size: 40px;">@category.Key.Name</div>

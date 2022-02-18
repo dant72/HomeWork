@@ -5,6 +5,8 @@ using HttpModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddSingleton<ICatalog, Catalog>();
 builder.Services.AddSingleton<IClock, Clock>();
 
