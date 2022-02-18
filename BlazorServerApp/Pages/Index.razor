@@ -1,4 +1,5 @@
 @page "/"
+@implements IDisposable
 
 <PageTitle>Index</PageTitle>
 
@@ -8,3 +9,18 @@
 <h2>Время @DateTime.Now.ToString("hh:mm:ss") </h2>
 
 <SurveyPrompt Title="How is Blazor working for you?"/>
+
+@code
+{
+    private CancellationToken _token = new CancellationToken();
+    protected async Task OnInitialzedAsync()
+    {
+        base.OnInitializedAsync();
+    }
+
+
+    public void Dispose()
+    {
+        
+    }
+}
