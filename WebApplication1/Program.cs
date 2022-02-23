@@ -17,7 +17,8 @@ builder.Services.AddHostedService<BackService.ExampleBackgroundService>();
 
 builder.Host.UseSerilog((ctx, lc) => lc
     .WriteTo.Console()
-    .WriteTo.Sentry("https://9e9bd1426a0348dc8be2e173fd11b365@o1151569.ingest.sentry.io/6228443")
+    .WriteTo.Sentry(builder.Configuration.GetSection("Dsn").Value)
+    .WriteTo.File(builder.Configuration.GetSection("LogsPath").Value)
     .ReadFrom.Configuration(ctx.Configuration));
 
 var app = builder.Build();
