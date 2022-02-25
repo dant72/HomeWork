@@ -1,3 +1,4 @@
+using Blazored.Toast;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using BlazorServerApp.Data;
@@ -10,10 +11,11 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<ICatalog, Catalog>();
 builder.Services.AddSingleton<IClock, Clock>();
 
-// Add services to the container.
+// Add services to the container
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddBlazoredToast();
 
 var app = builder.Build();
 
@@ -32,6 +34,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.MapBlazorHub();
+
 app.MapFallbackToPage("/_Host");
 
 app.Run();

@@ -1,4 +1,6 @@
 @page "/"
+@using System.Timers
+@using Timer = System.Timers.Timer
 @implements IDisposable
 
 <PageTitle>Index</PageTitle>
@@ -6,21 +8,34 @@
 <h1>Добро пожаловать в интернет магазин, HelloWorld</h1>
 
 
-<h2>Время @DateTime.Now.ToString("hh:mm:ss") </h2>
+<h2>Время @timeShow </h2>
 
 <SurveyPrompt Title="How is Blazor working for you?"/>
 
 @code
 {
-    private CancellationToken _token = new CancellationToken();
-    protected async Task OnInitialzedAsync()
+    private Timer _timer;
+    string timeShow = DateTime.Now.ToString();
+    protected override async Task OnInitializedAsync()
     {
+
         base.OnInitializedAsync();
+
+        _timer = new Timer();
+        _timer.Interval = 1000;
+        _timer.Elapsed += OnTimer;
+        _timer.Enabled = true;
+
     }
 
+    private void OnTimer(object? sender, ElapsedEventArgs e)
+    {
+        timeShow = DateTime.Now.ToString("h:mm:ss");
+        InvokeAsync(()=> StateHasChanged());
+    }
 
     public void Dispose()
     {
-        
+        _timer.Dispose();
     }
 }
