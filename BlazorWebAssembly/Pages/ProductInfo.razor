@@ -1,0 +1,23 @@
+@page "/ProductInfo/{ProductId:int}"
+@using HttpModels
+
+@inject IClock _clock
+@inject ICatalog _catalog
+
+<h3>Product</h3>
+@* HTML отображения карточки товара *@
+
+@code {
+    [Parameter]
+    public int ProductId { get; set; }
+ 
+    public Product Product { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Product = _catalog.GetProductById(ProductId);
+    }
+}
+
+<div><img src="@Product.Image" width="300" height="300"/></div><br><div>@Product.Name :: @Product.Price</div>

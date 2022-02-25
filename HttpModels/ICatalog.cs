@@ -8,4 +8,8 @@ public interface ICatalog
     public IEnumerable<Product> GetProducts(string userAgent);
     
     public List<Category> Categories { get; set; }
+
+    public Product GetProductById(int id);
+
+    public int GetNewId();
 }

@@ -4,7 +4,6 @@ namespace HttpModels;
 
 public class Product
 {
-    private static int currentID = 0;
     public int Id { set; get; }
     public string Name { get; set; }
 
@@ -14,9 +13,9 @@ public class Product
     
     public Category Category { get; set; }
     
-    public Product(string name, decimal price, Category category = null, string image = "")
+    public Product(int id, string name, decimal price, Category category = null, string image = "")
     {
-        Id = currentID++;
+        Id = id;
         Name = name;
         Price = price;
         Image = image;
