@@ -15,15 +15,15 @@ public class Catalog : ICatalog
         _time = time;
         Categories.Add(new Category(0,"Fruits"));
         Categories.Add(new Category(1, "Vegetables"));
-        Products.Add(new Product(1,"apple", 100, Categories[0],"https://media.istockphoto.com/photos/red-apple-fruit-with-green-leaf-isolated-on-white-picture-id925389178?s=612x612"));
-        Products.Add(new Product(2,"banana", 200, Categories[0],"https://media.istockphoto.com/photos/banana-picture-id1184345169?s=612x612"));
-        Products.Add(new Product(3,"orange", 150,Categories[0], "https://media.istockphoto.com/photos/whole-cross-section-and-quarter-of-fresh-organic-navel-orange-with-picture-id1227301369?s=612x612"));
-        Products.Add(new Product(4,"corn", 50, Categories[1], "https://media.istockphoto.com/photos/fresh-corn-with-green-leaves-still-life-vegetables-picture-id597955650?s=612x612"));
+        Products.Add(new Product(GetNewId(),"apple", 100, Categories[0],"https://media.istockphoto.com/photos/red-apple-fruit-with-green-leaf-isolated-on-white-picture-id925389178?s=612x612"));
+        Products.Add(new Product(GetNewId(),"banana", 200, Categories[0],"https://media.istockphoto.com/photos/banana-picture-id1184345169?s=612x612"));
+        Products.Add(new Product(GetNewId(),"orange", 150,Categories[0], "https://media.istockphoto.com/photos/whole-cross-section-and-quarter-of-fresh-organic-navel-orange-with-picture-id1227301369?s=612x612"));
+        Products.Add(new Product(GetNewId(),"corn", 50, Categories[1], "https://media.istockphoto.com/photos/fresh-corn-with-green-leaves-still-life-vegetables-picture-id597955650?s=612x612"));
     }
 
     public int GetNewId()
     {
-        return Products.Count > 0 ? Products.Max(p => p.Id) + 1 : 0;
+        return Products.Count > 0 ? Products.Max(p => p.Id) + 1 : 1;
     }
 
     public void AddProduct(Product product)

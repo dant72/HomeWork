@@ -1,8 +1,5 @@
-using System.Diagnostics.Tracing;
 using HttpModels;
 using WebApplication3;
-using Serilog;
-using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,12 +11,6 @@ builder.Services.AddSingleton<IClock, Clock>();
 
 builder.Services.Configure<SmtpCredentials>(builder.Configuration.GetSection("SmtpCredentials"));
 builder.Services.AddHostedService<BackService.ExampleBackgroundService>();
-
-builder.Host.UseSerilog((ctx, lc) => lc
-    .WriteTo.Console()
-    .WriteTo.Sentry(builder.Configuration.GetSection("Dsn").Value)
-    .WriteTo.File(builder.Configuration.GetSection("LogsPath").Value)
-    .ReadFrom.Configuration(ctx.Configuration));
 
 var app = builder.Build();
 
@@ -35,6 +26,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(

@@ -32,7 +32,7 @@ public class CatalogController : Controller
             var id = HttpContext.Request.Form["categoryId"].ToString();
             var name = HttpContext.Request.Form["name"].ToString();
             var image = HttpContext.Request.Form["image"].ToString();
-            _catalog.AddProduct(new Product(name, 0, _catalog.Categories.First(x => x.Id == int.Parse(id)), image));
+            _catalog.AddProduct(new Product(_catalog.GetNewId(), name, 0, _catalog.Categories.First(x => x.Id == int.Parse(id)), image));
         }
         
 
