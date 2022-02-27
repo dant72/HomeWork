@@ -16,12 +16,24 @@ public class Cart : ICart
     {
         if (Products.ContainsKey(product))
         {
-            var pr = Products.First(p => p.Key == product);
-            Products[product]++;
+            ++Products[product];
         }
         else
         {
-            Products.Add(product, 0);
+            Products.Add(product, 1);
+        } 
+        
+        return Task.CompletedTask;
+    }
+    
+    public Task RemoveAsync(Product product)
+    {
+        if (Products.ContainsKey(product))
+        {
+            if (Products[product] > 0)
+                --Products[product];
+            else
+                Products.Remove(product);
         } 
         
         return Task.CompletedTask;
