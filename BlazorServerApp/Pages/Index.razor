@@ -1,6 +1,5 @@
 @page "/"
 @using System.Timers
-@using Timer = System.Timers.Timer
 @implements IDisposable
 
 <PageTitle>Index</PageTitle>
@@ -14,25 +13,22 @@
 
 @code
 {
-    private PeriodicTimer _timer;
+    private Timer _timer;
     string timeShow = DateTime.Now.ToString();
-    protected override async void OnInitialized()
+
+    protected override void OnInitialized()
     {
-
-       
-
-        _timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
-       // _timer.Interval = 1000;
-        //_timer.Elapsed += OnTimer;
-        //_timer.Enabled = true;
-        base.OnInitialized();
-
+        _timer = new Timer();
+        _timer.Interval = 1000;
+        _timer.Elapsed += OnTimer;
+        _timer.Enabled = true;
+    //base.OnInitialized();
     }
 
     private void OnTimer(object? sender, ElapsedEventArgs e)
     {
         timeShow = DateTime.Now.ToString("h:mm:ss");
-        InvokeAsync(()=> StateHasChanged());
+    //InvokeAsync(()=> StateHasChanged());
     }
 
     public void Dispose()

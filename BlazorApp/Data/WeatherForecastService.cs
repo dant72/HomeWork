@@ -1,8 +1,8 @@
-namespace BlazorServerApp.Data;
+namespace BlazorApp.Data;
 
 public class WeatherForecastService
 {
-    private static readonly string[] Summaries =
+    private static readonly string[] Summaries = new[]
     {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };

@@ -30,7 +30,7 @@ public class Cart : ICart
     {
         if (Products.ContainsKey(product))
         {
-            if (Products[product] > 0)
+            if (Products[product] > 1)
                 --Products[product];
             else
                 Products.Remove(product);

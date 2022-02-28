@@ -1,28 +1,56 @@
 @page "/Catalog"
 @using HttpModels
-@using System.Reflection.Metadata
-@using System.Net.Http.Headers
-@using Microsoft.AspNetCore.Http.Headers
-@using Microsoft.AspNetCore.Http
+@using System.Timers
 @inject IHttpContextAccessor httpContextAccessor
 
 @inject IClock _clock
 @inject ICatalog _catalog
 <h3>Catalog</h3>
 
-@code {
-     
+<h2>Время @timeShow </h2>
+
+<SurveyPrompt Title="How is Blazor working for you?"/>
+
+@code
+{
+    private Timer _timer;
+    string timeShow = DateTime.Now.ToString();
+
+    protected override void OnInitialized()
+    {
+        _timer = new Timer();
+        _timer.Interval = 1000;
+        _timer.Elapsed += OnTimer;
+        _timer.Enabled = true;
+    //base.OnInitialized();
+    }
+
+    private void OnTimer(object? sender, ElapsedEventArgs e)
+    {
+        timeShow = DateTime.Now.ToString("h:mm:ss");
+    //InvokeAsync(()=> StateHasChanged());
+    }
+
+    public void Dispose()
+    {
+        _timer.Dispose();
+    }
 }
 
 <ul>
-@foreach (var @category in _catalog.GetProducts( httpContextAccessor.HttpContext.Request.Headers.UserAgent).GroupBy(x => x.Category))
-     {
-          <li>
-               <ul><div style="font-size: 40px;">@category.Key.Name</div>
-                    @foreach (var product in category)
-                    {
-                         <li><img src="@product.Image" width="100" height="100"/><div>@product.Name :: @product.Price</div></li> 
-                    }
-               </ul></li>
-     }
+    @foreach (var category in _catalog.GetProducts(httpContextAccessor.HttpContext.Request.Headers.UserAgent).GroupBy(x => x.Category))
+    {
+        <li>
+            <ul>
+                <div style="font-size: 40px;">@category.Key.Name</div>
+                @foreach (var product in category)
+                {
+                    <li>
+                        <img src="@product.Image" width="100" height="100"/>
+                        <div>@product.Name :: @product.Price</div>
+                    </li>
+                }
+            </ul>
+        </li>
+    }
 </ul>
