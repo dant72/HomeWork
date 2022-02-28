@@ -6,11 +6,10 @@
 @inject ICatalog _catalog
 
 <h3>Catalog</h3>
-<h3>Discounts: @timeShow</h3>
+<h3>Discounts: @((_clock.DiscountDate - DateTime.Now).ToString(@"hh\:mm\:ss"))</h3>
 
 @code {
     private Timer _timer;
-    TimeSpan timeShow = TimeSpan.Zero + TimeSpan.FromMinutes(5);
 
     protected override void OnInitialized()
     { 
@@ -25,7 +24,6 @@
 
     private void OnTimer(object? sender, ElapsedEventArgs e)
     {
-        timeShow -= TimeSpan.FromSeconds(1);
         InvokeAsync(()=> StateHasChanged());
     }
 
