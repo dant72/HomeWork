@@ -1,0 +1,54 @@
+@page "/AddProduct"
+@using HttpModels
+
+@inject IClock _clock
+@inject ICatalog _catalog
+
+@code {
+
+    string name ="";
+    string imageURL="";
+    string categoryId = "0";
+    string price = "0";
+    void AddProductToCatalog()
+    {
+        var product = new Product(_catalog.GetNewId(), name, decimal.Parse(price), _catalog.Categories.First(i => i.Id == int.Parse(categoryId)), imageURL);
+        _catalog.AddProduct(product);
+    }
+    
+}
+
+<h2>Add Product</h2>
+<EditForm Model="_catalog" OnValidSubmit="AddProductToCatalog">
+  <DataAnnotationsValidator/>
+ 
+  <table>
+  <tr><td>Category:</td><td> <select @bind="categoryId">
+      @foreach (var item in _catalog.Categories)
+      {
+          <option value="@item.Id">@item.Name</option>
+      }
+  </select></td></tr>
+  <tr><td>Name:</td><td><InputText @bind-Value="name" /></td></tr>
+  <tr><td>Price:</td><td> <InputText @bind-Value="price" /></td></tr>
+  <tr><td>ImageURL:</td><td> <InputText @bind-Value="imageURL" /></td></tr>
+
+  <tr><td><input type="submit" value="Add product"/></td></tr>
+  </table>
+  <ValidationSummary/>
+
+</EditForm>
+
+
+<ul>
+    @foreach (var @category in _catalog.GetProducts("").GroupBy(x => x.Category))
+    {
+        <li>
+            <ul><div style="font-size: 40px;">@category.Key.Name</div>
+                @foreach (var product in category)
+                {
+                    <li><img src="@product.Image" width="100" height="100"/><div>@product.Name :: @product.Price</div></li> 
+                }
+            </ul></li>
+    }
+</ul>
