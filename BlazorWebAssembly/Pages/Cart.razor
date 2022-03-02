@@ -4,17 +4,25 @@
 @inject ICart _cart
 
 @code {
-    public void AddProductToCart(int productId)
+    private void AddProductToCart(int productId)
     {
         var product = _cart.Products.First(p => p.Key.Id == productId);
         _cart.AddAsync(product.Key);
     }
-    public void RemoveProductFromCart(int productId)
+    private void RemoveProductFromCart(int productId)
     {
         var product = _cart.Products.First(p => p.Key.Id == productId);
         _cart.RemoveAsync(product.Key);
     }
+
+    private void ClearCart()
+    {
+        _cart.Products.Clear();
+    }
 }
+
+<button class="btn btn-primary" @onclick="ClearCart">Clear cart</button><br>
+
 <ul>
 @foreach (var @category in _cart.Products.GroupBy(x => x.Key.Category))
 {
