@@ -21,6 +21,10 @@ public class Catalog : ICatalog
         Products.Add(new Product(GetNewId(),"corn", 50, Categories[1], "https://media.istockphoto.com/photos/fresh-corn-with-green-leaves-still-life-vegetables-picture-id597955650?s=612x612"));
     }
 
+    public Catalog() : this(new Clock())
+    {
+    }
+
     public int GetNewId()
     {
         return Products.Count > 0 ? Products.Max(p => p.Id) + 1 : 1;
