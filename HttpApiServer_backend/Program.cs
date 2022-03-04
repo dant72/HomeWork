@@ -11,8 +11,6 @@ var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
 
-
-
 app.MapGet("/categories", async (AppDbContext context)
     => await context.Categories.ToListAsync());
 
