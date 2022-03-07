@@ -1,8 +1,10 @@
 using HttpModels;
 
-namespace HttpApiClient;
+namespace WebServerDB;
 
 public interface ICatalogService
 {
     Task<IList<Product>> GetProducts();
+
+    Task AddProduct(Product product);
 }

@@ -1,5 +1,4 @@
 using System.Collections.Concurrent;
-using System.Net.Mime;
 
 namespace HttpModels;
 
@@ -13,12 +12,12 @@ public class Catalog : ICatalog
     public Catalog(IClock time)
     {
         _time = time;
-        Categories.Add(new Category(0,"Fruits"));
-        Categories.Add(new Category(1, "Vegetables"));
-        Products.Add(new Product(GetNewId(),"apple", 100, Categories[0],"https://media.istockphoto.com/photos/red-apple-fruit-with-green-leaf-isolated-on-white-picture-id925389178?s=612x612"));
-        Products.Add(new Product(GetNewId(),"banana", 200, Categories[0],"https://media.istockphoto.com/photos/banana-picture-id1184345169?s=612x612"));
-        Products.Add(new Product(GetNewId(),"orange", 150,Categories[0], "https://media.istockphoto.com/photos/whole-cross-section-and-quarter-of-fresh-organic-navel-orange-with-picture-id1227301369?s=612x612"));
-        Products.Add(new Product(GetNewId(),"corn", 50, Categories[1], "https://media.istockphoto.com/photos/fresh-corn-with-green-leaves-still-life-vegetables-picture-id597955650?s=612x612"));
+        Categories.Add(new Category(1,"Fruits"));
+        Categories.Add(new Category(2, "Vegetables"));
+        Products.Add(new Product(GetNewId(),"apple", 100, 1,"https://media.istockphoto.com/photos/red-apple-fruit-with-green-leaf-isolated-on-white-picture-id925389178?s=612x612"));
+        Products.Add(new Product(GetNewId(),"banana", 200, 1,"https://media.istockphoto.com/photos/banana-picture-id1184345169?s=612x612"));
+        Products.Add(new Product(GetNewId(),"orange", 150,1, "https://media.istockphoto.com/photos/whole-cross-section-and-quarter-of-fresh-organic-navel-orange-with-picture-id1227301369?s=612x612"));
+        Products.Add(new Product(GetNewId(),"corn", 50, 2, "https://media.istockphoto.com/photos/fresh-corn-with-green-leaves-still-life-vegetables-picture-id597955650?s=612x612"));
     }
 
     public Catalog() : this(new Clock())
@@ -47,7 +46,7 @@ public class Catalog : ICatalog
 
     public IEnumerable<Product> GetProducts(string userAgent)
     {
-        return Products.Select(p => new Product(p.Id, p.Name, p.Price * DayOfWeekPrice(_time.LocalTime) * UserAgentPrice(userAgent), p.Category, p.Image));
+        return Products.Select(p => new Product(p.Id, p.Name, p.Price * DayOfWeekPrice(_time.LocalTime) * UserAgentPrice(userAgent), p.CategoryId, p.Image));
     }
     
     private decimal DayOfWeekPrice(DateTime date)

@@ -12,7 +12,7 @@
     string price = "0";
     void AddProductToCatalog()
     {
-        var product = new Product(_catalog.GetNewId(), name, decimal.Parse(price), _catalog.Categories.First(i => i.Id == int.Parse(categoryId)), imageURL);
+        var product = new Product(_catalog.GetNewId(), name, decimal.Parse(price), 0, imageURL);
         _catalog.AddProduct(product);
     }
     
@@ -41,10 +41,10 @@
 
 
 <ul>
-    @foreach (var @category in _catalog.GetProducts("").GroupBy(x => x.Category))
+    @foreach (var @category in _catalog.GetProducts("").GroupBy(x => x.CategoryId))
     {
         <li>
-            <ul><div style="font-size: 40px;">@category.Key.Name</div>
+            <ul><div style="font-size: 40px;">@category.Key</div>
                 @foreach (var product in category)
                 {
                     <li><img src="@product.Image" width="100" height="100"/><div>@product.Name :: @product.Price</div></li> 

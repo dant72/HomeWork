@@ -4,22 +4,15 @@
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>BlazorWebAssembly</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Corset" Version="3.0.4" />
-        <PackageReference Include="CorsProxy.AspNet" Version="1.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\HttpModels\HttpModels.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Reference Include="Microsoft.AspNetCore.Http" />
     </ItemGroup>
 
 </Project>

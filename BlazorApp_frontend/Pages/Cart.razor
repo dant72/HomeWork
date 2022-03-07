@@ -24,10 +24,10 @@
 <button class="btn btn-primary" @onclick="ClearCart">Clear cart</button><br>
 
 <ul>
-@foreach (var @category in _cart.Products.GroupBy(x => x.Key.Category))
+@foreach (var @category in _cart.Products.GroupBy(x => x.Key.CategoryId))
 {
     <li>
-        <ul><div style="font-size: 40px;">@category.Key.Name</div>
+        <ul><div style="font-size: 40px;">@category.Key</div>
             @foreach (var product in category)
             {
                 <li>

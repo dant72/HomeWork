@@ -9,14 +9,14 @@ public class Product
     public decimal Price { get; set; }
     public string Image { get; set; }
     
-    public Category Category { get; set; }
-    public Product(int id, string name, decimal price, Category category = null, string image = "")
+    public int CategoryId { get; set; }
+    public Product(int id, string name, decimal price, int categoryId = 0, string image = "")
     {
         Id = id;
         Name = name;
         Price = price;
         Image = image;
-        Category = category;
+        CategoryId = categoryId;
     }
 
     public Product()
