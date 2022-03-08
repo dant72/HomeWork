@@ -15,4 +15,8 @@
       <ProjectReference Include="..\HttpModels\HttpModels.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="Microsoft.AspNetCore.Cors" />
+    </ItemGroup>
+
 </Project>

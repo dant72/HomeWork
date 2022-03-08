@@ -1,6 +1,6 @@
 using HttpModels;
 
-namespace WebServerDB;
+namespace HttpApiServer_backend;
 
 public interface IProductRepository
 {

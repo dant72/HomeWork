@@ -1,7 +1,7 @@
 using HttpModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebServerDB;
+namespace HttpApiServer_backend;
 
 public class ProductRepository : IProductRepository
 {

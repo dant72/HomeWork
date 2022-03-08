@@ -1,7 +1,7 @@
 using HttpModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebServerDB;
+namespace HttpApiServer_backend;
 
 public class AppDbContext : DbContext
 { 
@@ -13,9 +13,9 @@ public class AppDbContext : DbContext
       DbContextOptions<AppDbContext> options) 
       : base(options)
    {
-      if (!Database.EnsureCreatedAsync().Result)
+      if (!Database.EnsureCreated())
       {
-         CreateDB();
+         //CreateDB();
       }
       
    }

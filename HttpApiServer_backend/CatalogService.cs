@@ -1,6 +1,6 @@
 using HttpModels;
 
-namespace WebServerDB;
+namespace HttpApiServer_backend;
 
 public class CatalogService : ICatalogService
 {
@@ -9,12 +9,14 @@ public class CatalogService : ICatalogService
     private readonly IProductRepository _productRepository;
     private readonly ICategoryRepository _categoryRepository;
     public List<Category> Categories { get; set; } = new();
+    private readonly HttpClient _httpClient;
 
-    public CatalogService(IClock clock, IProductRepository productRepository, ICategoryRepository categoryRepository)
+    public CatalogService(IClock clock, IProductRepository productRepository, ICategoryRepository categoryRepository, HttpClient httpClient)
     {
         _clock = clock;
         _productRepository = productRepository;
         _categoryRepository = categoryRepository;
+        _httpClient = httpClient;
     }
 
 

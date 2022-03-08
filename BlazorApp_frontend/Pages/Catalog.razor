@@ -5,30 +5,24 @@
 
 @inject IClock _clock
 @inject ICatalog _catalog
+@inject HttpClient Http
 
 <h3>Catalog</h3>
 
 @code {
-    private readonly HttpClient _client = new HttpClient();
     private List<Product> _products;
-    private string requestUri = "https://localhost:7168/products";
+    private string requestUri = "https://localhost:7214/products";
     private string message = "";
     
     protected override async Task OnInitializedAsync()
     {
-        //HttpResponseMessage response = await _client.GetAsync(requestUri);
-        //response.EnsureSuccessStatusCode()
-        {
-        _products = await response.Content.ReadFromJsonAsync<List<Product>>();
-        message = "";
-        }
-        //else
-        message = $"{requestUri} не доступен!";
-               
+        base.OnInitializedAsync();
+        var response = await Http.GetFromJsonAsync<Product[]>("https://localhost:7214/products");
+        _products = response.ToList();
     }
 
 }
-<div>@message</div>
+
 <ul>
     @foreach (var @category in _products.GroupBy(x => x.CategoryId))
     {
