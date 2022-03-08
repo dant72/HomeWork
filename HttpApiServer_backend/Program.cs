@@ -8,8 +8,7 @@ builder.Services.AddScoped<ICatalogService, CatalogService>();
 builder.Services.AddSingleton<IClock, Clock>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddHttpClient<ICatalogService, CatalogService>()
-    .SetHandlerLifetime(TimeSpan.FromMinutes(5));
+builder.Services.AddHttpClient<ICatalogService, CatalogService>();
 
 builder.Services.AddCors();
 
@@ -20,11 +19,12 @@ var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
 
-app.MapGet("/categories", async (AppDbContext context)
-    => await context.Categories.ToListAsync());
+app.MapGet("/categories", async (ICatalogService catalog)
+    => await catalog.GetCategories());
 
-app.MapGet("/products", async (AppDbContext context)
-    => await context.Products.ToListAsync());
+
+app.MapGet("/products", async (ICatalogService catalog)
+    => await catalog.GetProducts());
 
 app.MapGet("/add", async (AppDbContext context)
     => await context.Products.ToListAsync());
@@ -34,7 +34,7 @@ app.UseCors(policy =>
         .AllowAnyMethod()
         .AllowAnyHeader()
         .SetIsOriginAllowed(origin =>
-            origin is "https://localhost:44383"
+            origin is "https://localhost:7253"
                 or "https://mysite.ru"
         )
         .AllowCredentials();

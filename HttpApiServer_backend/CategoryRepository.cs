@@ -24,9 +24,20 @@ public class CategoryRepository : ICategoryRepository
         await _dbContext.SaveChangesAsync();
     }
 
+    public Task Update(Category order)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task Update(Product category)
     {
         _dbContext.Entry(category).State = EntityState.Modified;
         await _dbContext.SaveChangesAsync();
-    }  
+    }
+    
+    public async Task<IList<Category>> GetAll()
+    {
+        return await _dbContext.Categories.ToListAsync();
+    }
+    
 }

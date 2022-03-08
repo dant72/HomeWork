@@ -11,14 +11,15 @@
 
 @code {
     private List<Product> _products;
+    private List<Category> _categories;
     private string requestUri = "https://localhost:7214/products";
-    private string message = "";
-    
+
     protected override async Task OnInitializedAsync()
     {
-        base.OnInitializedAsync();
-        var response = await Http.GetFromJsonAsync<Product[]>("https://localhost:7214/products");
-        _products = response.ToList();
+        var products= await Http.GetFromJsonAsync<Product[]>("https://localhost:7214/products");
+        _products = products.ToList();
+        var categories= await Http.GetFromJsonAsync<Category[]>("https://localhost:7214/categories");
+        _categories = categories.ToList();
     }
 
 }
@@ -27,7 +28,7 @@
     @foreach (var @category in _products.GroupBy(x => x.CategoryId))
     {
         <li>
-            <ul><div style="font-size: 40px;">@category.Key</div>
+            <ul><div style="font-size: 40px;">@_categories.First(i => i.Id == category.Key).Name</div>
                 @foreach (var product in category)
                 {
                     <li><a href="/ProductInfo/@product.Id"><img src="@product.Image" width="100" height="100"/></a><div>@product.Name :: @product.Price</div></li> 
