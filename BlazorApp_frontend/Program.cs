@@ -8,7 +8,6 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-
 builder.Services.AddSingleton<ICatalog, Catalog>();
 builder.Services.AddScoped<ICart, Cart>();
 builder.Services.AddSingleton<IClock, Clock>();

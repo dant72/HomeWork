@@ -14,20 +14,11 @@ builder.Services.AddCors();
 
 builder.Services.AddDbContext<AppDbContext>(
     options => options.UseSqlite($"Data Source={dbPath}"));
-
+builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () => "Hello service!");
 
-app.MapGet("/categories", async (ICatalogService catalog)
-    => await catalog.GetCategories());
-
-
-app.MapGet("/products", async (ICatalogService catalog)
-    => await catalog.GetProducts());
-
-app.MapGet("/add", async (AppDbContext context)
-    => await context.Products.ToListAsync());
 app.UseCors(policy =>
 {
     policy
@@ -39,5 +30,11 @@ app.UseCors(policy =>
         )
         .AllowCredentials();
 });
+
+app.UseRouting();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Catalog}/{action=Products}/{id?}");
 
 app.Run();

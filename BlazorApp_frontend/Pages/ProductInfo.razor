@@ -4,6 +4,7 @@
 @inject IClock _clock
 @inject ICatalog _catalog
 @inject ICart _cart
+@inject HttpClient Http
 
 <h3>Product</h3>
 @* HTML отображения карточки товара *@
@@ -14,10 +15,15 @@
  
     public Product Product { get; set; }
 
+    private List<Product> _products;
+    private List<Category> _categories;
+
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
-        Product = _catalog.GetProductById(ProductId);
+        var products= await Http.GetFromJsonAsync<Product[]>("https://localhost:7214/catalog/products");
+        _products = products.ToList();
+
+        Product = _products.First(i => i.Id == ProductId);
     }
     
     public void AddProductToCart()

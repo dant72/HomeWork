@@ -1,17 +1,17 @@
+using HttpApiServer_backend;
 using HttpModels;
 
-namespace HttpApiServer_backend;
+namespace HttpApiClient;
 
-public class CatalogService : ICatalogService
+public class CatalogSrv
 {
-
     private readonly IClock _clock;
     private readonly IProductRepository _productRepository;
     private readonly ICategoryRepository _categoryRepository;
     public List<Category> Categories { get; set; } = new();
     private readonly HttpClient _httpClient;
 
-    public CatalogService(IClock clock, IProductRepository productRepository, ICategoryRepository categoryRepository, HttpClient httpClient)
+    public CatalogSrv(IClock clock, IProductRepository productRepository, ICategoryRepository categoryRepository, HttpClient httpClient)
     {
         _clock = clock;
         _productRepository = productRepository;
@@ -30,16 +30,11 @@ public class CatalogService : ICatalogService
     {
         return await _categoryRepository.GetAll();
     }
-
-    public async Task<int> GeNextId()
-    {
-        var products = await _productRepository.GetAll();
-        return products.Max(i => i.Id) + 1;
-    }
-
+    
     public Task AddProduct(Product product)
     {
         _productRepository.Add(product);
+        _productRepository.Add(new Product(1,"apple", 100, 1,"https://media.istockphoto.com/photos/red-apple-fruit-with-green-leaf-isolated-on-white-picture-id925389178?s=612x612")); 
         return Task.CompletedTask;
 
     }
@@ -73,5 +68,5 @@ public class CatalogService : ICatalogService
             default: 
                 return 1.0m;
         }
-    }
+    } 
 }

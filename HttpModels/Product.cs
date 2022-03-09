@@ -7,10 +7,10 @@ public class Product
     public int Id { set; get; }
     public string Name { get; set; }
     public decimal Price { get; set; }
-    public string Image { get; set; }
+    public string? Image { get; set; }
     
     public int CategoryId { get; set; }
-    public Product(int id, string name, decimal price, int categoryId = 0, string image = "")
+    public Product(int id, string name, decimal price, int categoryId = 0, string? image = "")
     {
         Id = id;
         Name = name;

@@ -12,16 +12,14 @@
 @code {
     private List<Product> _products;
     private List<Category> _categories;
-    private string requestUri = "https://localhost:7214/products";
 
     protected override async Task OnInitializedAsync()
     {
-        var products= await Http.GetFromJsonAsync<Product[]>("https://localhost:7214/products");
+        var products= await Http.GetFromJsonAsync<Product[]>("https://localhost:7214/catalog/products");
         _products = products.ToList();
-        var categories= await Http.GetFromJsonAsync<Category[]>("https://localhost:7214/categories");
+        var categories= await Http.GetFromJsonAsync<Category[]>("https://localhost:7214/catalog/categories");
         _categories = categories.ToList();
     }
-
 }
 
 <ul>
