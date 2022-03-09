@@ -14,7 +14,7 @@ builder.Services.AddCors();
 
 builder.Services.AddDbContext<AppDbContext>(
     options => options.UseSqlite($"Data Source={dbPath}"));
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllers();
 var app = builder.Build();
 
 app.MapGet("/", () => "Hello service!");

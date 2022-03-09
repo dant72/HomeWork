@@ -1,10 +1,11 @@
 @page "/ProductInfo/{ProductId:int}"
 @using HttpModels
+@using HttpApiClient
 
 @inject IClock _clock
 @inject ICatalog _catalog
 @inject ICart _cart
-@inject HttpClient Http
+@inject ApiClient _apiClient
 
 <h3>Product</h3>
 @* HTML отображения карточки товара *@
@@ -20,7 +21,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var products= await Http.GetFromJsonAsync<Product[]>("https://localhost:7214/catalog/products");
+        var products= await _apiClient.GetProducts();
         _products = products.ToList();
 
         Product = _products.First(i => i.Id == ProductId);

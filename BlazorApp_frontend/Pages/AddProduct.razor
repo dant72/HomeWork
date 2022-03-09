@@ -1,22 +1,21 @@
 @page "/AddProduct"
 @using HttpModels
+@using HttpApiClient
 
 @inject IClock _clock
-@inject HttpClient Http
 @inject ICatalog _catalog
+@inject ApiClient _apiClient
 
 @code {
     
     private List<Product> _products;
     private List<Category> _categories;
-    private Product Product { get; set; }
-    private string requestUri = "https://localhost:7214/products";
 
     protected override async Task OnInitializedAsync()
     {
-        var products= await Http.GetFromJsonAsync<Product[]>("https://localhost:7214/catalog/products");
+        var products = await _apiClient.GetProducts();
         _products = products.ToList();
-        var categories= await Http.GetFromJsonAsync<Category[]>("https://localhost:7214/catalog/categories");
+        var categories= await _apiClient.GetCategories();
         _categories = categories.ToList();
     }
 
@@ -24,18 +23,19 @@
     string imageURL="";
     string categoryId = "0";
     string price = "0";
+    
     async Task AddProductToCatalog()
     {
-        await Http.PostAsync($"https://localhost:7214/catalog/add?name={name}&categoryId={categoryId}&price={price}&img={imageURL}", null);
+        var product = new Product(0, name, decimal.Parse(price), int.Parse(categoryId), imageURL);
+        await _apiClient.AddProduct(product);
     }
     
 }
 
 <h2>Add Product</h2>
-<Form OnSubmit="AddProductToCatalog">
-  <DataAnnotationsValidator/>
- 
-  <table>
+<Form onsubmit="@AddProductToCatalog">
+
+    <table>
   <tr><td>Category:</td><td> <select @bind="categoryId">
       @foreach (var item in _categories)
       {

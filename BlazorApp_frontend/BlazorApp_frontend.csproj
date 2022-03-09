@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\HttpApiClient\HttpApiClient.csproj" />
       <ProjectReference Include="..\HttpModels\HttpModels.csproj" />
     </ItemGroup>
 

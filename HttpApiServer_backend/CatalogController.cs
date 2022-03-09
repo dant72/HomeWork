@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HttpApiServer_backend;
 
-public class CatalogController : Controller
+public class CatalogController : ControllerBase
 {
     private ICatalogService _catalog;
     public CatalogController(ICatalogService catalog)
@@ -20,10 +20,10 @@ public class CatalogController : Controller
     {
         return  _catalog.GetCategories();
     }
-
-    public async Task Add(string name, string price, int categoryId, string img)
+    
+    [HttpPost]
+    public async Task AddProduct([FromBody]Product product)
     {
-        var product = new Product(0, name, Decimal.Parse(price), categoryId, img);
         await _catalog.AddProduct(product);
     }
 }

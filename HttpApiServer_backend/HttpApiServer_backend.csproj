@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ApiClient\ApiClient.csproj" />
       <ProjectReference Include="..\HttpModels\HttpModels.csproj" />
     </ItemGroup>
 

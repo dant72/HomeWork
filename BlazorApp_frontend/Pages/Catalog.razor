@@ -1,11 +1,12 @@
 @page "/catalog"
 @using HttpModels
 @using System.Net.Http.Json
+@using HttpApiClient
 @using static System.Net.Http.HttpMessageInvoker
 
 @inject IClock _clock
 @inject ICatalog _catalog
-@inject HttpClient Http
+@inject ApiClient _apiClient
 
 <h3>Catalog</h3>
 
@@ -15,10 +16,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var products= await Http.GetFromJsonAsync<Product[]>("https://localhost:7214/catalog/products");
-        _products = products.ToList();
-        var categories= await Http.GetFromJsonAsync<Category[]>("https://localhost:7214/catalog/categories");
-        _categories = categories.ToList();
+        var products = await _apiClient.GetProducts();
+        var categories= await _apiClient.GetCategories();
+        
+        if (products != null && categories != null)
+        {
+            _categories = categories.ToList();
+            _products = products.ToList();
+        }
     }
 }
 
