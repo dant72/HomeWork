@@ -2,10 +2,7 @@ using HttpModels;
 
 namespace HttpApiServer_backend;
 
-public interface IProductRepository
+public interface IProductRepository : IRepository<Product>
 {
-    Task<Product> GetById(int id);
-    Task Add(Product product);
-    Task Update(Product product);
-    Task<IReadOnlyList<Product>> GetAll();
+    
 }

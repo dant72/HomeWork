@@ -2,11 +2,7 @@ using HttpModels;
 
 namespace HttpApiServer_backend;
 
-public interface IAccountRepository
+public interface IAccountRepository : IRepository<Account>
 {
-    Task<Account> GetById(int id);
-    Task Add(Account account);
-    Task Update(Account account);
-        
-    Task<IReadOnlyList<Account>> GetAll(); 
+
 }
