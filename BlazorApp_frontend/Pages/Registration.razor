@@ -1,0 +1,61 @@
+@page "/Registration"
+@using HttpModels
+@using HttpApiClient
+@inject ApiClient _apiClient
+
+<h3>Registration</h3>
+
+@code {
+    private string email = "";
+    private string password = "";
+    private string login = "";
+
+    private async void AccountRegistration()
+    {
+        var account = new Account
+        {
+            Id = 0,
+            Email = email,
+            Login = login,
+            Password = password
+        };
+
+        await _apiClient.Registration(account);
+    }
+
+    private string searchEmail = "";
+    private Account? _account;
+    
+    private async void GetAccountByEmail()
+    {
+        _account = await _apiClient.GetAccountByEmail(searchEmail);
+    }
+}
+
+<Form onsubmit="@AccountRegistration">
+
+    <table>
+        <tr><td>Login:</td><td><input type="text" @bind="login" /></td></tr>
+        <tr><td>Password:</td><td> <input type="text" @bind="password" /></td></tr>
+        <tr><td>Email:</td><td> <input type="text" @bind="email" /></td></tr>
+
+        <tr><td><input type="submit" value="Add product"/></td></tr>
+    </table>
+
+</Form>
+
+<h3>Search account by Email</h3>
+
+<Form onsubmit="@GetAccountByEmail">
+
+    <table>
+        <tr><td>Email:</td><td> <input type="text" @bind="searchEmail" /></td></tr>
+
+        <tr><td><input type="submit" value="Add product"/></td></tr>
+    </table>
+
+</Form>
+
+<tr><td>Login:</td><td>@_account?.Login</td></tr>
+<tr><td>Password:</td><td>@_account?.Password</td></tr>
+<tr><td>Email:</td><td> @_account?.Email</td></tr>

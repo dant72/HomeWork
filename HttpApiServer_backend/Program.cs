@@ -10,6 +10,7 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 builder.Services.AddHttpClient<ICatalogService, CatalogService>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 
 builder.Services.AddCors();
 

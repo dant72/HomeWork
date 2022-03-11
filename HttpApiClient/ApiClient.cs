@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using HttpModels;
+using Microsoft.Extensions.Logging;
 
 namespace HttpApiClient;
 
@@ -26,5 +27,15 @@ public class ApiClient
     public Task AddProduct(Product product)
     {
         return _httpClient.PostAsJsonAsync($"{_host}/Catalog/AddProduct", product);
+    }
+    
+    public Task Registration(Account account)
+    {
+        return _httpClient.PostAsJsonAsync($"{_host}/Registration/Registration", account);
+    }
+    
+    public Task<Account?> GetAccountByEmail(string email)
+    {
+        return _httpClient.GetFromJsonAsync<Account>($"{_host}/Registration/GetAccountByEmail?email={email}");
     }
 }
