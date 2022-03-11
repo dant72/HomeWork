@@ -6,8 +6,8 @@ public interface ICategoryRepository
 {
 
         Task<Category> GetById(int id);
-        Task Add(Category order);
-        Task Update(Category order);
+        Task Add(Category category);
+        Task Update(Category category);
         
         Task<IReadOnlyList<Category>> GetAll();
 

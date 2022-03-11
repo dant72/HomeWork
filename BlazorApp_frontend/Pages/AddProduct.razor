@@ -28,6 +28,8 @@
     {
         var product = new Product(0, name, decimal.Parse(price), int.Parse(categoryId), imageURL);
         await _apiClient.AddProduct(product);
+        
+        await OnInitializedAsync();
     }
     
 }

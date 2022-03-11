@@ -12,7 +12,7 @@ public class EfRepository<TEntity> : IRepository<TEntity> where TEntity: class, 
         _dbContext = dbContext;
     }
 
-    private DbSet<TEntity> _entities => _dbContext.Set<TEntity>();
+    protected DbSet<TEntity> _entities => _dbContext.Set<TEntity>();
 
     public virtual Task<TEntity> GetById(int Id)
         => _entities.FirstAsync(it => it.Id == Id);
