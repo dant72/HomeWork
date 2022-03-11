@@ -11,12 +11,12 @@ public class CatalogController : ControllerBase
         _catalog = catalog;
     }
 
-    public Task<IList<Product>> Products()
+    public Task<IReadOnlyList<Product>> Products()
     {
         return  _catalog.GetProducts();
     }
     
-    public Task<IList<Category>> Categories()
+    public Task<IReadOnlyList<Category>> Categories()
     {
         return  _catalog.GetCategories();
     }

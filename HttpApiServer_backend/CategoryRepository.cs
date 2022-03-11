@@ -3,41 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HttpApiServer_backend;
 
-public class CategoryRepository : ICategoryRepository
+public class CategoryRepository : EfRepository<Category>, ICategoryRepository
 {
-    private readonly AppDbContext _dbContext;
-    
-    public CategoryRepository(AppDbContext dbContext)
+    public CategoryRepository(AppDbContext dbContext) : base(dbContext)
     {
-        _dbContext = dbContext;
     }
-    
-    public Task<Category> GetById(int id) 
-        => _dbContext.Categories.FirstAsync(it => it.Id == id);
-
-    public Task<Category?> FindById(int id) 
-        => _dbContext.Categories.FirstOrDefaultAsync(it => it.Id == id);
-
-    public async Task Add(Category category)
-    {
-        await _dbContext.Categories.AddAsync(category);
-        await _dbContext.SaveChangesAsync();
-    }
-
-    public Task Update(Category order)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task Update(Product category)
-    {
-        _dbContext.Entry(category).State = EntityState.Modified;
-        await _dbContext.SaveChangesAsync();
-    }
-    
-    public async Task<IList<Category>> GetAll()
-    {
-        return await _dbContext.Categories.ToListAsync();
-    }
-    
 }

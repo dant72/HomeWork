@@ -20,13 +20,13 @@ public class CatalogService : ICatalogService
     }
 
 
-    public async Task<IList<Product>> GetProducts()
+    public async Task<IReadOnlyList<Product>> GetProducts()
     {
         var pr = await _productRepository.GetAll(); 
         return pr.Select(p => new Product(p.Id, p.Name, p.Price * DayOfWeekPrice(_clock.LocalTime) * UserAgentPrice(""), p.CategoryId, p.Image)).ToList();
     }
 
-    public async Task<IList<Category>> GetCategories()
+    public async Task<IReadOnlyList<Category>> GetCategories()
     {
         return await _categoryRepository.GetAll();
     }

@@ -1,8 +1,6 @@
-using System.Net.Mime;
-
 namespace HttpModels;
 
-public class Product
+public class Product : IEntity
 {
     public int Id { set; get; }
     public string Name { get; set; }

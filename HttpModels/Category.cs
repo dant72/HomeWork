@@ -1,8 +1,7 @@
 namespace HttpModels;
 
-public class Category
+public class Category : IEntity
 {
-    private static int Ids = 0;
     public int Id { get; set; }
     public string Name { get; set; }
 

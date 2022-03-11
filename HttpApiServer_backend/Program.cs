@@ -8,6 +8,7 @@ builder.Services.AddScoped<ICatalogService, CatalogService>();
 builder.Services.AddSingleton<IClock, Clock>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 builder.Services.AddHttpClient<ICatalogService, CatalogService>();
 
 builder.Services.AddCors();
