@@ -2,7 +2,6 @@ using HttpModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HttpApiServer_backend.Controllers;
-
 public class CatalogController : ControllerBase
 {
     private ICatalogService _catalog;

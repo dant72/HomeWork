@@ -7,21 +7,23 @@ public class AppDbContext : DbContext
 { 
    public DbSet<Category> Categories => Set<Category>();
    public DbSet<Product> Products => Set<Product>();
+   public DbSet<Account> Accounts => Set<Account>();
 
 
    public AppDbContext(
       DbContextOptions<AppDbContext> options) 
       : base(options)
    {
-      if (!Database.EnsureCreated())
-      {
-         //CreateDB();
-      }
       
+      //Database.EnsureDeleted();
+      //Database.EnsureCreated();
+      //CreateDB();
+
    }
 
    private void CreateDB()
    {
+      Accounts.Add(new Account(id: 0, login: "test", email: "test", password: "test"));
       Categories.Add(new Category(1,"Fruits"));
       Categories.Add(new Category(2, "Vegetables"));
       Products.Add(new Product(1,"apple", 100, 1,"https://media.istockphoto.com/photos/red-apple-fruit-with-green-leaf-isolated-on-white-picture-id925389178?s=612x612"));

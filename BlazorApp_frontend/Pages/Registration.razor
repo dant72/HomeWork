@@ -6,19 +6,13 @@
 <h3>Registration</h3>
 
 @code {
-    private string email = "";
-    private string password = "";
-    private string login = "";
+    private string email = " ";
+    private string password = " ";
+    private string login = " ";
 
     private async void AccountRegistration()
     {
-        var account = new Account
-        {
-            Id = 0,
-            Email = email,
-            Login = login,
-            Password = password
-        };
+        var account = new Account(id: 0,login, email, password);
 
         await _apiClient.Registration(account);
     }
@@ -28,7 +22,19 @@
     
     private async void GetAccountByEmail()
     {
-        _account = await _apiClient.GetAccountByEmail(searchEmail);
+        try
+        {
+            _account = await _apiClient.GetAccountByEmail(searchEmail);
+        }
+        catch
+        {
+            _account = null;
+        }
+        finally
+        {
+            StateHasChanged();
+        }
+        
     }
 }
 
@@ -39,7 +45,7 @@
         <tr><td>Password:</td><td> <input type="text" @bind="password" /></td></tr>
         <tr><td>Email:</td><td> <input type="text" @bind="email" /></td></tr>
 
-        <tr><td><input type="submit" value="Add product"/></td></tr>
+        <tr><td><input type="submit" value="SIGN UP"/></td></tr>
     </table>
 
 </Form>
@@ -51,11 +57,13 @@
     <table>
         <tr><td>Email:</td><td> <input type="text" @bind="searchEmail" /></td></tr>
 
-        <tr><td><input type="submit" value="Add product"/></td></tr>
+        <tr><td><input type="submit" value="Find account by e-mail"/></td></tr>
     </table>
 
 </Form>
-
-<tr><td>Login:</td><td>@_account?.Login</td></tr>
-<tr><td>Password:</td><td>@_account?.Password</td></tr>
-<tr><td>Email:</td><td> @_account?.Email</td></tr>
+@if (_account != null)
+{
+    <tr><td>Login:</td><td>@_account?.Login</td></tr>
+    <tr><td>Password:</td><td>@_account?.Password</td></tr>
+    <tr><td>Email:</td><td> @_account?.Email</td></tr>
+}

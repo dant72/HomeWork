@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HttpApiServer_backend.Controllers;
 
-[ApiController]
-[Route("registration")]
 public class RegistrationController : ControllerBase
 {
    private readonly IRegistrationService _registrationService;
@@ -17,7 +15,7 @@ public class RegistrationController : ControllerBase
    }
    
    [HttpPost]
-   public async Task Registration(Account account)
+   public async Task Registration([FromBody]Account account)
    {
       await _registrationService.AddAccount(account);
       _logger.Log(LogLevel.Information, $"Registration {account.Login}");
@@ -27,5 +25,10 @@ public class RegistrationController : ControllerBase
    public async Task<Account> GetAccountByEmail(string email)
    {
       return  await _registrationService.GetAccountByEmail(email);
+   }
+   
+   public Task<IReadOnlyList<Account>> Accounts()
+   {
+      return  _registrationService.GetAccounts();
    }
 }

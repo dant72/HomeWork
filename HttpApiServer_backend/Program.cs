@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 var dbPath = "myapp.db";
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<ICatalogService, CatalogService>();
+builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.Services.AddSingleton<IClock, Clock>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();

@@ -11,9 +11,9 @@ public class RegistrationService : IRegistrationService
         _accountRepository = accountRepository;
     }
     
-    public Task AddAccount(Account product)
+    public Task AddAccount(Account account)
     {
-        _accountRepository.Add(product);
+        _accountRepository.Add(account);
         return Task.CompletedTask;
 
     }
@@ -27,4 +27,10 @@ public class RegistrationService : IRegistrationService
     {
         return _accountRepository.GetByEmail(email);
     }
+
+    public async Task<IReadOnlyList<Account>> GetAccounts()
+    {
+        return await _accountRepository.GetAll();
+    }
+
 }
