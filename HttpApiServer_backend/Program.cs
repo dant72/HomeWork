@@ -1,5 +1,6 @@
 using HttpApiServer_backend;
 using HttpModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var dbPath = "myapp.db";
@@ -12,6 +13,7 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 builder.Services.AddHttpClient<ICatalogService, CatalogService>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddSingleton<IPasswordHasher<Account>, PasswordHasher<Account>>();
 
 builder.Services.AddCors();
 

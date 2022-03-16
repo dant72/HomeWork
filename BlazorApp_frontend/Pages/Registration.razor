@@ -12,7 +12,7 @@
 
     private async void AccountRegistration()
     {
-        var account = new Account(id: 0,login, email, password);
+        var account = new AccountRequestModel(login, email, password);
 
         await _apiClient.Registration(account);
     }
@@ -49,14 +49,21 @@
     </table>
 
 </Form>
-
+<table>
+    <tr>
+        <td>
+            <button>
+                
+            </button>
+        </td>
+    </tr>
+</table>
 <h3>Search account by Email</h3>
 
 <Form onsubmit="@GetAccountByEmail">
 
     <table>
         <tr><td>Email:</td><td> <input type="text" @bind="searchEmail" /></td></tr>
-
         <tr><td><input type="submit" value="Find account by e-mail"/></td></tr>
     </table>
 

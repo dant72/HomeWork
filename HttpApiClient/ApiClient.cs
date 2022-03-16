@@ -28,7 +28,7 @@ public class ApiClient
         return _httpClient.PostAsJsonAsync($"{_host}/Catalog/AddProduct", product);
     }
     
-    public Task Registration(Account account)
+    public Task Registration(AccountRequestModel account)
     {
         return _httpClient.PostAsJsonAsync($"{_host}/Registration/Registration", account);
     }

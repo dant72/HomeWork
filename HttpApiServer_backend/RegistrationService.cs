@@ -52,7 +52,7 @@ public class RegistrationService : IRegistrationService
  
         foreach(var error in result.Errors)
         {
-            _logger.Log(LogLevel.Error, error.ErrorMessage);
+            _logger.Log(LogLevel.Information, error.ErrorMessage);
         }
         return false;
     }
