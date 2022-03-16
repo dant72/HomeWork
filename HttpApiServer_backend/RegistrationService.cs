@@ -5,15 +5,24 @@ namespace HttpApiServer_backend;
 public class RegistrationService : IRegistrationService
 {
     private readonly IAccountRepository _accountRepository;
+    private readonly AccountValidator _validator;
+    private readonly ILogger<RegistrationService> _logger;
 
-    public RegistrationService(IAccountRepository accountRepository)
+    public RegistrationService(IAccountRepository accountRepository, ILogger<RegistrationService> logger)
     {
         _accountRepository = accountRepository;
+        _validator = new AccountValidator();
+        _logger = logger;
+
     }
     
     public Task AddAccount(Account account)
     {
-        _accountRepository.Add(account);
+        if (ValidateAccount(account))
+        {
+            _accountRepository.Add(account);
+        }
+        
         return Task.CompletedTask;
 
     }
@@ -31,6 +40,21 @@ public class RegistrationService : IRegistrationService
     public async Task<IReadOnlyList<Account>> GetAccounts()
     {
         return await _accountRepository.GetAll();
+    }
+    
+    private bool ValidateAccount(Account customer)
+    {
+        var result = _validator.Validate(customer);
+        if (result.IsValid)
+        {
+            return true;
+        }
+ 
+        foreach(var error in result.Errors)
+        {
+            _logger.Log(LogLevel.Error, error.ErrorMessage);
+        }
+        return false;
     }
 
 }
