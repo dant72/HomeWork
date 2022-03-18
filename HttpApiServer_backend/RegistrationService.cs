@@ -1,4 +1,8 @@
+using System.Net;
+using System.Text.Json.Nodes;
+using HttpApiClient;
 using HttpModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HttpApiServer_backend;
 
@@ -55,6 +59,22 @@ public class RegistrationService : IRegistrationService
             _logger.Log(LogLevel.Information, error.ErrorMessage);
         }
         return false;
+    }
+
+    public async Task<ActionResult<Account>> Autorization(AccountRequestModel account)
+    {
+        var acc = await GetAccountByEmail(account.Email);
+        if (acc == null)
+        {
+            return new ContentResult()
+            {
+                StatusCode = 404
+            };
+        }
+        else
+        {
+            return acc;
+        }
     }
 
 }

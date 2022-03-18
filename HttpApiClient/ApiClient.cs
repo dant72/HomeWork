@@ -33,6 +33,11 @@ public class ApiClient
         return _httpClient.PostAsJsonAsync($"{_host}/Registration/Registration", account);
     }
     
+    /*public Task<ActionResult Autorization(AccountRequestModel account)
+    {
+        return _httpClient.PostAsJsonAsync($"{_host}/Registration/Autorization?email={account.Email}&password={account.Password});
+    }*/
+    
     public Task<Account[]?> GetAccounts()
     {
         return  _httpClient.GetFromJsonAsync<Account[]>($"{_host}/Registration/Accounts");

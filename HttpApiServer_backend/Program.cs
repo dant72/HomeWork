@@ -22,6 +22,9 @@ builder.Services.AddDbContext<AppDbContext>(
 builder.Services.AddControllers();
 var app = builder.Build();
 
+app.UseMiddleware<RequestLoggingMiddleware>();
+app.UseMiddleware<CheckBrowserMiddleware>();
+
 app.MapGet("/", () => "Hello service!");
 
 app.UseCors(policy =>

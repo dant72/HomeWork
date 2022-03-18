@@ -25,6 +25,13 @@ public class RegistrationController : ControllerBase
       _logger.Log(LogLevel.Information, $"Registration {account.Login}");
    }
    
+   [HttpPost]
+   public async Task<ActionResult<Account?>> Autorization([FromBody]AccountRequestModel account)
+   {
+      return await _registrationService.Autorization(account);
+      _logger.Log(LogLevel.Information, $"Autorization {account.Login}");
+   }
+   
    [HttpGet] 
    public async Task<Account> GetAccountByEmail(string email)
    {
@@ -35,6 +42,8 @@ public class RegistrationController : ControllerBase
    {
       return  _registrationService.GetAccounts();
    }
+   
+   
 
    private Account Hash(AccountRequestModel account)
    {

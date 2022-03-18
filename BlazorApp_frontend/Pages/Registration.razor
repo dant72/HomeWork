@@ -37,7 +37,10 @@
         {
             StateHasChanged();
         }
-        
+    } 
+    private async void Autorization()
+    {
+                 
     }
 }
 
@@ -62,7 +65,7 @@
 </table>
 <h3>Search account by Email</h3>
 
-<Form onsubmit="@GetAccountByEmail">
+<Form onsubmit="@Autorization">
 
     <table>
         <tr><td>Email:</td><td> <input type="text" @bind="searchEmail" /></td></tr>
