@@ -10,6 +10,9 @@
     private string password = " ";
     private string login = " ";
 
+    private string login2;
+    private string password2;
+
     private async void AccountRegistration()
     {
         var account = new AccountRequestModel(login, email, password);
@@ -49,14 +52,13 @@
     </table>
 
 </Form>
+
+<h3>Autorization</h3>
 <table>
-    <tr>
-        <td>
-            <button>
-                
-            </button>
-        </td>
-    </tr>
+        <tr><td>Login:</td><td><input type="text" @bind="login2" /></td></tr>
+        <tr><td>Password:</td><td> <input type="text" @bind="password2" /></td></tr>
+
+    <tr><td><input type="submit" value="SIGN IN"/></td></tr>
 </table>
 <h3>Search account by Email</h3>
 
