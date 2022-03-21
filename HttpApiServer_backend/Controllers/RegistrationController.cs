@@ -28,8 +28,9 @@ public class RegistrationController : ControllerBase
    [HttpPost]
    public async Task<ActionResult<Account?>> Autorization([FromBody]AccountRequestModel account)
    {
-      return await _registrationService.Autorization(account);
       _logger.Log(LogLevel.Information, $"Autorization {account.Login}");
+      return await _registrationService.Autorization(account);
+      
    }
    
    [HttpGet] 
@@ -48,11 +49,11 @@ public class RegistrationController : ControllerBase
    private Account Hash(AccountRequestModel account)
    {
       var acc = new Account();
-      string hashedPassword = _passwordHasher.HashPassword(acc, account.Password);
-
-      acc.Id = 0;
+      
       acc.Login = account.Login;
       acc.Email = account.Email;
+      string hashedPassword = _passwordHasher.HashPassword(null, account.Password);
+      
       acc.Password = hashedPassword;
 
       return acc;

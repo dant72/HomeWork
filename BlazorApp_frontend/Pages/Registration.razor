@@ -6,23 +6,24 @@
 <h3>Registration</h3>
 
 @code {
-    private string email = " ";
-    private string password = " ";
-    private string login = " ";
+    private string email = "";
+    private string password = "";
+    private string login = "";
 
     private string login2;
     private string password2;
 
     private async void AccountRegistration()
     {
-        var account = new AccountRequestModel(login, email, password);
+        var account = new AccountRequestModel(login, password, email);
 
         await _apiClient.Registration(account);
     }
 
     private string searchEmail = "";
     private Account? _account;
-    
+    private Account? _account2;
+
     private async void GetAccountByEmail()
     {
         try
@@ -40,7 +41,9 @@
     } 
     private async void Autorization()
     {
-                 
+        var account = new AccountRequestModel(login2, password2, login2);
+        _account2 = await _apiClient.Autorization(account);
+        StateHasChanged();
     }
 }
 
@@ -57,15 +60,25 @@
 </Form>
 
 <h3>Autorization</h3>
-<table>
+<Form onsubmit="@Autorization">
+    <table>
         <tr><td>Login:</td><td><input type="text" @bind="login2" /></td></tr>
         <tr><td>Password:</td><td> <input type="text" @bind="password2" /></td></tr>
+        <tr><td><input type="submit" value="SIGN IN"/></td></tr>
+    </table>
+</Form>
 
-    <tr><td><input type="submit" value="SIGN IN"/></td></tr>
-</table>
+@if (_account2 != null)
+{
+    <div>Success</div>
+}
+else
+{
+    <div>Fail!</div> 
+}
 <h3>Search account by Email</h3>
 
-<Form onsubmit="@Autorization">
+<Form onsubmit="@GetAccountByEmail">
 
     <table>
         <tr><td>Email:</td><td> <input type="text" @bind="searchEmail" /></td></tr>

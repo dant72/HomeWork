@@ -33,10 +33,20 @@ public class ApiClient
         return _httpClient.PostAsJsonAsync($"{_host}/Registration/Registration", account);
     }
     
-    /*public Task<ActionResult Autorization(AccountRequestModel account)
+    public async Task<Account> Autorization(AccountRequestModel account)
     {
-        return _httpClient.PostAsJsonAsync($"{_host}/Registration/Autorization?email={account.Email}&password={account.Password});
-    }*/
+        try
+        {
+            using var response = await _httpClient.PostAsJsonAsync($"{_host}/Registration/Autorization", account);
+            response.EnsureSuccessStatusCode(); //кидаем исключение при плохом статусе
+            return await response.Content.ReadFromJsonAsync<Account>();
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+
+    }
     
     public Task<Account[]?> GetAccounts()
     {
