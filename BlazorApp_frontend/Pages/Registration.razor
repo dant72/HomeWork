@@ -89,6 +89,6 @@ else
 @if (_account != null)
 {
     <tr><td>Login:</td><td>@_account?.Login</td></tr>
-    <tr><td>Password:</td><td>@_account?.Password</td></tr>
+    <tr><td>Password:</td><td>@_account?.HashPassword</td></tr>
     <tr><td>Email:</td><td> @_account?.Email</td></tr>
 }

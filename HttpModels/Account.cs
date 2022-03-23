@@ -2,12 +2,12 @@ namespace HttpModels;
 
 public class Account : IEntity
 {
-    public Account(int id, string login, string email, string password)
+    public Account(int id, string login, string email, string hashPassword)
     {
         Id = id;
         Login = login;
         Email = email;
-        Password = password;
+        HashPassword = hashPassword;
     }
 
     public Account()
@@ -15,7 +15,7 @@ public class Account : IEntity
         Id = 0;
         Email = "None";
         Login = "Default";
-        Password = "";
+        HashPassword = "";
     }
 
     public int Id { get; set; }
@@ -24,6 +24,6 @@ public class Account : IEntity
     
     public string Login { get; set; }
     
-    public string Password { get; set; }
+    public string HashPassword { get; set; }
     
 }

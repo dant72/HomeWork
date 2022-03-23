@@ -23,7 +23,7 @@ public class AppDbContext : DbContext
 
    private void CreateDB()
    {
-      Accounts.Add(new Account(id: 0, login: "test", email: "test", password: "test"));
+      Accounts.Add(new Account(id: 0, login: "test", email: "test", hashPassword: "test"));
       Categories.Add(new Category(1,"Fruits"));
       Categories.Add(new Category(2, "Vegetables"));
       Products.Add(new Product(1,"apple", 100, 1,"https://media.istockphoto.com/photos/red-apple-fruit-with-green-leaf-isolated-on-white-picture-id925389178?s=612x612"));

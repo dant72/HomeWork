@@ -52,9 +52,9 @@ public class RegistrationController : ControllerBase
       
       acc.Login = account.Login;
       acc.Email = account.Email;
-      string hashedPassword = _passwordHasher.HashPassword(null, account.Password);
+      string hashedPassword = _passwordHasher.HashPassword(acc, account.Password);
       
-      acc.Password = hashedPassword;
+      acc.HashPassword = hashedPassword;
 
       return acc;
    }

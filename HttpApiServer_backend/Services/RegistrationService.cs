@@ -71,9 +71,11 @@ public class RegistrationService : IRegistrationService
     public async Task<ActionResult<Account>> Autorization(AccountRequestModel account)
     {
         var acc = await GetAccountByLogin(account.Login);
-        /*var t = _passwordHasher.VerifyHashedPassword(null, acc.Password, account.Password) ==
-                 PasswordVerificationResult.Success;*/
-        if (acc != null)
+        
+       // var isCorrectPassword = _passwordHasher.VerifyHashedPassword(acc, acc.HashPassword, account.Password) ==
+         //        PasswordVerificationResult.Success;
+        
+        if (acc != null /*&& isCorrectPassword*/)
         {
             return acc;
         }

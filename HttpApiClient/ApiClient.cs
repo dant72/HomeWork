@@ -39,6 +39,7 @@ public class ApiClient
         {
             using var response = await _httpClient.PostAsJsonAsync($"{_host}/Registration/Autorization", account);
             response.EnsureSuccessStatusCode(); //кидаем исключение при плохом статусе
+            
             return await response.Content.ReadFromJsonAsync<Account>();
         }
         catch (Exception e)
