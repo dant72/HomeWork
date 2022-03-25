@@ -57,7 +57,7 @@ builder.Services.AddAuthorization();
 var app = builder.Build();
 
 app.UseMiddleware<RequestLoggingMiddleware>();
-app.UseMiddleware<CheckBrowserMiddleware>();
+//app.UseMiddleware<CheckBrowserMiddleware>();
 
 app.MapGet("/", () => "Hello service!");
 

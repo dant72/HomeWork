@@ -26,6 +26,7 @@ public class RegistrationService : IRegistrationService
         _validator = new AccountValidator();
         _logger = logger;
         _tokenService = tokenService;
+        _passwordHasher = passwordHasher;
 
     }
     
@@ -79,10 +80,11 @@ public class RegistrationService : IRegistrationService
     {
         var acc = await GetAccountByLogin(account.Login);
         
-       // var isCorrectPassword = _passwordHasher.VerifyHashedPassword(acc, acc.HashPassword, account.Password) ==
-         //        PasswordVerificationResult.Success;
+       var isCorrectPassword = _passwordHasher.VerifyHashedPassword(acc, acc.HashPassword, account.Password) !=
+               PasswordVerificationResult.Failed;
+
         
-        if (acc != null /*&& isCorrectPassword*/)
+        if (acc != null && isCorrectPassword)
         {
             var token = _tokenService.GenerateToken(acc);
             return new AccountResponseModel(acc, token);

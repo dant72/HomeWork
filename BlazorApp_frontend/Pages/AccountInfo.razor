@@ -7,33 +7,23 @@
 
 @code {
 
-    private Account[]? _accounts;
+    private Account? _account;
 
     protected override async Task OnInitializedAsync()
     {
-        try
         {
-            _accounts = await _apiClient.GetAccounts();
+            _account = await _apiClient.GetAccount();
         }
-        catch
-        {
-        }
-        
     }
-    
-
 }
-@if (_accounts != null)
-{
-    <div>
-        @foreach (var account in _accounts)
-        {
-            <div>
-                @account.Login
-            </div>
-        }
 
-    </div>
+@if (_account != null)
+{
+    <table>
+        <tr><td>Login:</td><td>@_account.Login</td></tr>
+        <tr><td>Password:</td><td>@_account.HashPassword</td></tr>
+        <tr><td>Email:</td><td> @_account.Email</td></tr>
+    </table>
 }
 else
 {

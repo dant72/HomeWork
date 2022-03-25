@@ -1,8 +1,10 @@
+using System.Security.Claims;
 using HttpApiClient;
 using HttpModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace HttpApiServer_backend.Controllers;
 
@@ -33,15 +35,26 @@ public class RegistrationController : ControllerBase
       return await _registrationService.Autorization(account);
       
    }
-   
+  
+   [Authorize]
    [HttpGet] 
    public async Task<Account> GetAccountByEmail(string email)
    {
       return  await _registrationService.GetAccountByEmail(email);
    }
+   
+   [Authorize]
+   [HttpPost ("get_account")]
+   public async Task<Account> GetAccount()
+   {
+      var claim = User.Claims.First(it => it.Type == JwtRegisteredClaimNames.Email);
+      var userEmail = claim.Value;
+      return  await _registrationService.GetAccountByEmail(userEmail);
+   }
    [Authorize]
    public Task<IReadOnlyList<Account>> Accounts()
    {
+      User.FindFirstValue((ClaimTypes.Email));
       return  _registrationService.GetAccounts();
    }
    
