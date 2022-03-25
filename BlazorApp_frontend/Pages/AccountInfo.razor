@@ -1,0 +1,41 @@
+@page "/AccountInfo"
+@using HttpApiClient
+@using HttpModels
+
+@inject ApiClient _apiClient
+<h3>Account_Info</h3>
+
+@code {
+
+    private Account[]? _accounts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _accounts = await _apiClient.GetAccounts();
+        }
+        catch
+        {
+        }
+        
+    }
+    
+
+}
+@if (_accounts != null)
+{
+    <div>
+        @foreach (var account in _accounts)
+        {
+            <div>
+                @account.Login
+            </div>
+        }
+
+    </div>
+}
+else
+{
+    <div>No authorization!</div>
+}

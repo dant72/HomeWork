@@ -1,5 +1,6 @@
 using HttpApiClient;
 using HttpModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,7 +39,7 @@ public class RegistrationController : ControllerBase
    {
       return  await _registrationService.GetAccountByEmail(email);
    }
-   
+   [Authorize]
    public Task<IReadOnlyList<Account>> Accounts()
    {
       return  _registrationService.GetAccounts();

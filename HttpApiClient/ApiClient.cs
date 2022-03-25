@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using HttpModels;
@@ -50,7 +51,7 @@ public class ApiClient
             return null;
         }
     }
-    
+
     public Task<Account[]?> GetAccounts()
     {
         return  _httpClient.GetFromJsonAsync<Account[]>($"{_host}/Registration/Accounts");
