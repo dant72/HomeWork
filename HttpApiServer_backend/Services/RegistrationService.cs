@@ -13,12 +13,19 @@ public class RegistrationService : IRegistrationService
     private readonly AccountValidator _validator;
     private readonly ILogger<RegistrationService> _logger;
     private readonly IPasswordHasher<Account> _passwordHasher;
+    private readonly ITokenService _tokenService;
 
-    public RegistrationService(IAccountRepository accountRepository, ILogger<RegistrationService> logger, IPasswordHasher<Account> passwordHasher)
+    public RegistrationService(
+        IAccountRepository accountRepository,
+        ILogger<RegistrationService> logger,
+        IPasswordHasher<Account> passwordHasher,
+        ITokenService tokenService
+        )
     {
         _accountRepository = accountRepository;
         _validator = new AccountValidator();
         _logger = logger;
+        _tokenService = tokenService;
 
     }
     
@@ -68,7 +75,7 @@ public class RegistrationService : IRegistrationService
         return false;
     }
 
-    public async Task<ActionResult<Account>> Autorization(AccountRequestModel account)
+    public async Task<ActionResult<AccountResponseModel>> Autorization(AccountRequestModel account)
     {
         var acc = await GetAccountByLogin(account.Login);
         
@@ -77,7 +84,8 @@ public class RegistrationService : IRegistrationService
         
         if (acc != null /*&& isCorrectPassword*/)
         {
-            return acc;
+            var token = _tokenService.GenerateToken(acc);
+            return new AccountResponseModel(acc, token);
         }
 
         return new ContentResult()

@@ -5,10 +5,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace HttpApiServer_backend;
 
-public class TokenService
+public class TokenService : ITokenService
 {
     private readonly JwtConfig _jwtConfig;
-
     public TokenService(JwtConfig jwtConfig)
     {
         _jwtConfig = jwtConfig;

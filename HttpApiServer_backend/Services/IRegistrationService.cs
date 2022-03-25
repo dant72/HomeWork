@@ -8,7 +8,7 @@ public interface IRegistrationService
 {
     Task AddAccount(Account account);
     
-    Task <ActionResult<Account>>Autorization(AccountRequestModel account);
+    Task <ActionResult<AccountResponseModel>>Autorization(AccountRequestModel account);
 
     Task<Account> GetAccountByEmail(string email);
 

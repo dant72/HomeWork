@@ -17,6 +17,7 @@ builder.Services.AddHttpClient<ICatalogService, CatalogService>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddSingleton<IPasswordHasher<Account>, PasswordHasher<Account>>();
 
+
 builder.Services.AddCors();
 
 builder.Services.AddDbContext<AppDbContext>(
@@ -25,6 +26,8 @@ builder.Services.AddControllers();
 JwtConfig jwtConfig = builder.Configuration
     .GetSection("JwtConfig")
     .Get<JwtConfig>();
+
+builder.Services.AddScoped<ITokenService>(_ => new TokenService(jwtConfig));
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -48,6 +51,7 @@ builder.Services.AddAuthentication(options =>
         };
     });
 builder.Services.AddAuthorization();
+//builder.Services.AddScoped<ITokenService, TokenService>();
 
 
 var app = builder.Build();

@@ -26,7 +26,7 @@ public class RegistrationController : ControllerBase
    }
    
    [HttpPost]
-   public async Task<ActionResult<Account?>> Autorization([FromBody]AccountRequestModel account)
+   public async Task<ActionResult<AccountResponseModel?>> Autorization([FromBody]AccountRequestModel account)
    {
       _logger.Log(LogLevel.Information, $"Autorization {account.Login}");
       return await _registrationService.Autorization(account);
