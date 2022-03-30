@@ -11,21 +11,28 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await base.OnInitializedAsync();
+        try
         {
             _account = await _apiClient.GetAccount();
         }
+        catch
+        {
+            
+        }
+
+        StateHasChanged();
     }
+    
 }
 
 @if (_account != null)
 {
-    <table>
-        <tr><td>Login:</td><td>@_account.Login</td></tr>
-        <tr><td>Password:</td><td>@_account.HashPassword</td></tr>
-        <tr><td>Email:</td><td> @_account.Email</td></tr>
-    </table>
+    <tr><td>Login:</td><td>@_account?.Login</td></tr>
+    <tr><td>Password:</td><td>@_account?.HashPassword</td></tr>
+    <tr><td>Email:</td><td> @_account?.Email</td></tr>
 }
 else
 {
-    <div>No authorization!</div>
+    <div> No auth</div>
 }

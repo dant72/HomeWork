@@ -44,11 +44,10 @@ public class RegistrationController : ControllerBase
    }
    
    [Authorize]
-   [HttpPost ("get_account")]
+   [HttpGet]
    public async Task<Account> GetAccount()
    {
-      var claim = User.Claims.First(it => it.Type == JwtRegisteredClaimNames.Email);
-      var userEmail = claim.Value;
+      var userEmail = User.FindFirstValue(ClaimTypes.Email);
       return  await _registrationService.GetAccountByEmail(userEmail);
    }
    [Authorize]

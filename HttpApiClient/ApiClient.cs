@@ -59,7 +59,7 @@ public class ApiClient
     
     public Task<Account?> GetAccount()
     {
-        return _httpClient.GetFromJsonAsync<Account>($"{_host}/Registration/get_account");
+        return _httpClient.GetFromJsonAsync<Account>($"{_host}/Registration/GetAccount");
     }
     
     public Task<Account?> GetAccountByEmail(string email)
