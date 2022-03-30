@@ -9,24 +9,25 @@ namespace HttpApiServer_backend;
 
 public class RegistrationService : IRegistrationService
 {
-    private readonly IAccountRepository _accountRepository;
     private readonly AccountValidator _validator;
     private readonly ILogger<RegistrationService> _logger;
     private readonly IPasswordHasher<Account> _passwordHasher;
     private readonly ITokenService _tokenService;
+    private readonly IUnitOfWork _uow;
 
     public RegistrationService(
         IAccountRepository accountRepository,
         ILogger<RegistrationService> logger,
         IPasswordHasher<Account> passwordHasher,
-        ITokenService tokenService
+        ITokenService tokenService,
+        IUnitOfWork uow
         )
     {
-        _accountRepository = accountRepository;
         _validator = new AccountValidator();
         _logger = logger;
         _tokenService = tokenService;
         _passwordHasher = passwordHasher;
+        _uow = uow;
 
     }
     
@@ -34,7 +35,8 @@ public class RegistrationService : IRegistrationService
     {
         if (ValidateAccount(account))
         {
-            _accountRepository.Add(account);
+            _uow.AccountRepository.Add(account);
+            _uow.SaveChangesAsync();
         }
         
         return Task.CompletedTask;
@@ -43,22 +45,22 @@ public class RegistrationService : IRegistrationService
     
     public Task GetAccountById(int id)
     {
-        return _accountRepository.GetById(id);
+        return _uow.AccountRepository.GetById(id);
     }
     
     public Task<Account> GetAccountByEmail(string email)
     {
-        return _accountRepository.GetByEmail(email);
+        return _uow.AccountRepository.GetByEmail(email);
     }
     
     public Task<Account> GetAccountByLogin(string login)
     {
-        return _accountRepository.GetByLogin(login);
+        return _uow.AccountRepository.GetByLogin(login);
     }
 
-    public async Task<IReadOnlyList<Account>> GetAccounts()
+    public Task<IReadOnlyList<Account>> GetAccounts()
     {
-        return await _accountRepository.GetAll();
+        return _uow.AccountRepository.GetAll();
     }
     
     private bool ValidateAccount(Account account)
@@ -95,5 +97,4 @@ public class RegistrationService : IRegistrationService
             StatusCode = 404
         };
     }
-
 }

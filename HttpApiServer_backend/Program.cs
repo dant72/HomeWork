@@ -16,6 +16,7 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 builder.Services.AddHttpClient<ICatalogService, CatalogService>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddSingleton<IPasswordHasher<Account>, PasswordHasher<Account>>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWorkEf>();
 
 
 builder.Services.AddCors();

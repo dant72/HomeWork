@@ -23,12 +23,12 @@ public class EfRepository<TEntity> : IRepository<TEntity> where TEntity: class, 
     public virtual async Task Add(TEntity entity)
     {
         await _entities.AddAsync(entity);
-        await _dbContext.SaveChangesAsync();
+        //await _dbContext.SaveChangesAsync();
     }
 
     public virtual async Task Update(TEntity TEntity)
     {
         _dbContext.Entry(TEntity).State = EntityState.Modified;
-        await _dbContext.SaveChangesAsync();
+        //await _dbContext.SaveChangesAsync();
     }
 }
