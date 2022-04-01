@@ -30,16 +30,19 @@ public class RegistrationService : IRegistrationService
 
     }
     
-    public Task AddAccount(Account account)
+    public async Task AddAccount(Account account)
     {
         if (ValidateAccount(account))
         {
-            _uow.AccountRepository.Add(account);
+            var accByLogin = await GetAccountByEmail(account.Email);
+            var accByEmail = await GetAccountByLogin(account.Login);
+
+            if (accByLogin != null || accByEmail != null)
+                throw new Exception("Login or Email already exist!");
+
+            _uow.AccountRepository.Add(account); 
             _uow.SaveChangesAsync();
         }
-        
-        return Task.CompletedTask;
-
     }
     
     public Task GetAccountById(int id)

@@ -10,7 +10,7 @@ public class AccountRepository : EfRepository<Account>, IAccountRepository
     }
 
     public Task<Account> GetByEmail(string email)
-        => _entities.FirstAsync(it => it.Email == email);
+        => _entities.FirstOrDefaultAsync(it => it.Email == email);
     
     public Task<Account> GetByLogin(string login)
         => _entities.FirstOrDefaultAsync(it => it.Login == login);

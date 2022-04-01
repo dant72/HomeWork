@@ -24,8 +24,16 @@ public class RegistrationController : ControllerBase
    [HttpPost]
    public async Task Registration([FromBody]AccountRequestModel account)
    {
-      await _registrationService.AddAccount(Hash(account));
-      _logger.Log(LogLevel.Information, $"Registration {account.Login}");
+      try
+      {
+         await _registrationService.AddAccount(Hash(account));
+         _logger.Log(LogLevel.Information, $"Registration {account.Login}");
+      }
+      catch (Exception e)
+      {
+         _logger.Log(LogLevel.Warning, e.Message);
+      }
+
    }
    
    [HttpPost]
