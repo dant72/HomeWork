@@ -9,4 +9,5 @@ public interface ICatalogService
     Task AddProduct(Product product);
     Task GetProduct(int id);
     Task<int> GeNextId();
+    Task<IReadOnlyList<Cart2>> GetCards();
 }

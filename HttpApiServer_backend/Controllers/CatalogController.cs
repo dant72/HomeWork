@@ -19,10 +19,17 @@ public class CatalogController : ControllerBase
     {
         return  _catalog.GetCategories();
     }
-    
+
+    public Task<IReadOnlyList<Cart2>> Carts()
+    {
+        return _catalog.GetCards();
+    }
+
     [HttpPost]
     public async Task AddProduct([FromBody]Product product)
     {
         await _catalog.AddProduct(product);
     }
+    
+    
 }

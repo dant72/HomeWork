@@ -24,6 +24,11 @@ public class CatalogService : ICatalogService
         return pr.Select(p => new Product(p.Id, p.Name, p.Price * DayOfWeekPrice(_clock.LocalTimeNow) * UserAgentPrice(""), p.CategoryId, p.Image)).ToList();
     }
 
+    public async Task<IReadOnlyList<Cart2>> GetCards()
+    {
+        return await _uow.CartRepository.GetAll();
+    }
+
     public async Task<IReadOnlyList<Category>> GetCategories()
     {
         return await _uow.CategoryRepository.GetAll();
