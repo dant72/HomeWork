@@ -8,9 +8,11 @@ namespace HttpApiServer_backend;
 public class TokenService : ITokenService
 {
     private readonly JwtConfig _jwtConfig;
-    public TokenService(JwtConfig jwtConfig)
+    private readonly IClock _clock;
+    public TokenService(JwtConfig jwtConfig, IClock clock)
     {
         _jwtConfig = jwtConfig;
+        _clock = clock;
     }
     public string GenerateToken(Account account)
     {
@@ -21,7 +23,7 @@ public class TokenService : ITokenService
                 new Claim(JwtRegisteredClaimNames.Sub, account.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, account.Email)
             }),
-            Expires = DateTime.UtcNow.Add(_jwtConfig.LifeTime),
+            Expires = _clock.UtcNow.Add(_jwtConfig.LifeTime),
             Audience = _jwtConfig.Audience,
             Issuer = _jwtConfig.Issuer,
             SigningCredentials = new SigningCredentials(

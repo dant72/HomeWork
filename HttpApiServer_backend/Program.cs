@@ -28,7 +28,7 @@ JwtConfig jwtConfig = builder.Configuration
     .GetSection("JwtConfig")
     .Get<JwtConfig>();
 
-builder.Services.AddScoped<ITokenService>(_ => new TokenService(jwtConfig));
+builder.Services.AddScoped<ITokenService>(_ => new TokenService(jwtConfig, new Clock()));
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

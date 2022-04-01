@@ -4,7 +4,9 @@ namespace HttpModels;
 
 public class Clock : IClock
 {
-    public DateTime LocalTime => TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZone);
+    public DateTime LocalTimeNow => TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZone);
+
+    public DateTime UtcNow => DateTime.UtcNow;
 
     public TimeZoneInfo TimeZone { get; set; } = TimeZoneInfo.Utc;
     

@@ -46,7 +46,7 @@ public class Catalog : ICatalog
 
     public IEnumerable<Product> GetProducts(string userAgent)
     {
-        return Products.Select(p => new Product(p.Id, p.Name, p.Price * DayOfWeekPrice(_time.LocalTime) * UserAgentPrice(userAgent), p.CategoryId, p.Image));
+        return Products.Select(p => new Product(p.Id, p.Name, p.Price * DayOfWeekPrice(_time.LocalTimeNow) * UserAgentPrice(userAgent), p.CategoryId, p.Image));
     }
     
     private decimal DayOfWeekPrice(DateTime date)

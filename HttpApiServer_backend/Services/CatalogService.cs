@@ -21,7 +21,7 @@ public class CatalogService : ICatalogService
     public async Task<IReadOnlyList<Product>> GetProducts()
     {
         var pr = await _uow.ProductRepository.GetAll(); 
-        return pr.Select(p => new Product(p.Id, p.Name, p.Price * DayOfWeekPrice(_clock.LocalTime) * UserAgentPrice(""), p.CategoryId, p.Image)).ToList();
+        return pr.Select(p => new Product(p.Id, p.Name, p.Price * DayOfWeekPrice(_clock.LocalTimeNow) * UserAgentPrice(""), p.CategoryId, p.Image)).ToList();
     }
 
     public async Task<IReadOnlyList<Category>> GetCategories()

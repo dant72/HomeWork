@@ -12,7 +12,7 @@ public class UnitTest1
         var time = new Clock();
         
         time.TimeZone = TimeZoneInfo.Local;
-        var result = time.LocalTime;
+        var result = time.LocalTimeNow;
         var expect = DateTime.Now;
         Assert.True(result.Hour == expect.Hour && result.Date == expect.Date);
     }

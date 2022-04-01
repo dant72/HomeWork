@@ -1,7 +1,7 @@
 @model HttpModels.IClock
 
 @{
-    ViewData["Time"] = @Model.LocalTime.ToString();
+    ViewData["Time"] = @Model.LocalTimeNow.ToString();
 }
 
 <form method="post">
@@ -12,4 +12,4 @@
 </form>
 
 
-<div> @Model.TimeZone.DisplayName - @Model.LocalTime.ToString()</div>
+<div> @Model.TimeZone.DisplayName - @Model.LocalTimeNow.ToString()</div>
