@@ -16,7 +16,6 @@ public class RegistrationService : IRegistrationService
     private readonly IUnitOfWork _uow;
 
     public RegistrationService(
-        IAccountRepository accountRepository,
         ILogger<RegistrationService> logger,
         IPasswordHasher<Account> passwordHasher,
         ITokenService tokenService,

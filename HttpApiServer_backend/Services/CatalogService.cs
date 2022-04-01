@@ -6,47 +6,45 @@ public class CatalogService : ICatalogService
 {
 
     private readonly IClock _clock;
-    private readonly IProductRepository _productRepository;
-    private readonly ICategoryRepository _categoryRepository;
+    private readonly IUnitOfWork _uow;
     public List<Category> Categories { get; set; } = new();
     private readonly HttpClient _httpClient;
 
-    public CatalogService(IClock clock, IProductRepository productRepository, ICategoryRepository categoryRepository, HttpClient httpClient)
+    public CatalogService(IClock clock,  HttpClient httpClient, IUnitOfWork uow)
     {
         _clock = clock;
-        _productRepository = productRepository;
-        _categoryRepository = categoryRepository;
+        _uow = uow;
         _httpClient = httpClient;
     }
 
 
     public async Task<IReadOnlyList<Product>> GetProducts()
     {
-        var pr = await _productRepository.GetAll(); 
+        var pr = await _uow.ProductRepository.GetAll(); 
         return pr.Select(p => new Product(p.Id, p.Name, p.Price * DayOfWeekPrice(_clock.LocalTime) * UserAgentPrice(""), p.CategoryId, p.Image)).ToList();
     }
 
     public async Task<IReadOnlyList<Category>> GetCategories()
     {
-        return await _categoryRepository.GetAll();
+        return await _uow.CategoryRepository.GetAll();
     }
 
     public async Task<int> GeNextId()
     {
-        var products = await _productRepository.GetAll();
+        var products = await _uow.ProductRepository.GetAll();
         return products.Max(i => i.Id) + 1;
     }
 
     public Task AddProduct(Product product)
     {
-        _productRepository.Add(product);
+        _uow.ProductRepository.Add(product);
+        _uow.SaveChangesAsync(); 
         return Task.CompletedTask;
-
     }
     
     public Task GetProduct(int id)
     {
-        return _productRepository.GetById(id);
+        return _uow.ProductRepository.GetById(id);
     }
     
     private decimal DayOfWeekPrice(DateTime date)

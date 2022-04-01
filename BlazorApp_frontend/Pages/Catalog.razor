@@ -1,4 +1,4 @@
-@page "/catalog"
+ @page "/catalog"
 @using HttpModels
 @using System.Net.Http.Json
 @using HttpApiClient
@@ -24,6 +24,7 @@
             _categories = categories.ToList();
             _products = products.ToList();
         }
+        await base.OnInitializedAsync();
     }
 }
 

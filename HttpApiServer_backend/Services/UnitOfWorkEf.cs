@@ -4,17 +4,21 @@ public class UnitOfWorkEf : IUnitOfWork, IAsyncDisposable
 {
     public IAccountRepository AccountRepository { get; }
     public IProductRepository ProductRepository { get; }
+    
+    public ICategoryRepository CategoryRepository { get; }
 
     private readonly AppDbContext _dbContext;
 
     public UnitOfWorkEf(
         AppDbContext dbContext,
         IAccountRepository accountRepository,
-        IProductRepository productRepository) 
+        IProductRepository productRepository,
+        ICategoryRepository categoryRepository) 
     {
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         AccountRepository = accountRepository ?? throw new ArgumentNullException(nameof(accountRepository));
-        ProductRepository = productRepository ?? throw new ArgumentException(nameof(productRepository)); 
+        ProductRepository = productRepository ?? throw new ArgumentException(nameof(productRepository));
+        CategoryRepository = categoryRepository ?? throw new ArgumentException(nameof(categoryRepository));
     }
 
     public Task SaveChangesAsync(CancellationToken cancellationToken = default)
