@@ -29,6 +29,13 @@ public class CatalogService : ICatalogService
         return await _uow.CartRepository.GetAll();
     }
 
+    public Task AddCart(Cart2 cart)
+    {
+        _uow.CartRepository.Add(cart);
+        _uow.SaveChangesAsync();
+        return Task.CompletedTask;
+    }
+
     public async Task<IReadOnlyList<Category>> GetCategories()
     {
         return await _uow.CategoryRepository.GetAll();

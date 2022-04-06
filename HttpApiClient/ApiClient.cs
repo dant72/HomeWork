@@ -29,7 +29,12 @@ public class ApiClient
     {
         return _httpClient.PostAsJsonAsync($"{_host}/Catalog/AddProduct", product);
     }
-    
+
+    public Task AddCart(Cart2 cart)
+    {
+        return _httpClient.PostAsJsonAsync($"{_host}/Catalog/AddCart", cart);
+    }
+
     public Task Registration(AccountRequestModel account)
     {
         return _httpClient.PostAsJsonAsync($"{_host}/Registration/Registration", account);

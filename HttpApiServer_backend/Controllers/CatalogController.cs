@@ -30,6 +30,10 @@ public class CatalogController : ControllerBase
     {
         await _catalog.AddProduct(product);
     }
-    
-    
+
+    [HttpPost]
+    public async Task AddCart([FromBody] Cart2 cart)
+    {
+        await _catalog.AddCart(cart);
+    }
 }

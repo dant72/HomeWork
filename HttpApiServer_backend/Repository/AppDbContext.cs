@@ -10,6 +10,8 @@ public class AppDbContext : DbContext
    private DbSet<Account> Accounts => Set<Account>();
    private DbSet<Cart2> Carts => Set<Cart2>();
 
+    private DbSet<CartItem> CartItems => Set<CartItem>();
+
 
    public AppDbContext(
       DbContextOptions<AppDbContext> options) 
@@ -34,7 +36,7 @@ public class AppDbContext : DbContext
       Products.Add(new Product(3,"orange", 150,1, "https://media.istockphoto.com/photos/whole-cross-section-and-quarter-of-fresh-organic-navel-orange-with-picture-id1227301369?s=612x612"));
       Products.Add(new Product(4,"corn", 50, 2, "https://media.istockphoto.com/photos/fresh-corn-with-green-leaves-still-life-vegetables-picture-id597955650?s=612x612"));
       var cart = new Cart2(1, acc);
-      cart.Items.Add(new CartItem(){Product = product, Count = 2});
+      cart.CartItems.Add(new CartItem(){Product = product, Count = 2});
       Carts.Add(cart);
       
 

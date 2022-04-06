@@ -1,9 +1,13 @@
 @page "/Cart"
+@using HttpApiClient
 @using HttpModels
+
 <h3>Cart</h3>
 @inject ICart _cart
+@inject ApiClient _apiClient
 
-@code {
+@code
+{
     private void AddProductToCart(int productId)
     {
         var product = _cart.Products.First(p => p.Key.Id == productId);
@@ -17,7 +21,7 @@
 
     private void ClearCart()
     {
-        _cart.Products.Clear();
+        _apiClient.AddCart(new Cart2());
     }
 }
 

@@ -1,6 +1,7 @@
 using System.Net;
 using System.Text.Json.Nodes;
 using HttpApiClient;
+using HttpApiServer_backend.Controllers;
 using HttpModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +39,8 @@ public class RegistrationService : IRegistrationService
             var accByEmail = await GetAccountByLogin(account.Login);
 
             if (accByLogin != null || accByEmail != null)
-                throw new Exception("Login or Email already exist!");
+                throw new AccountException();
+
 
             _uow.AccountRepository.Add(account); 
             _uow.SaveChangesAsync();
