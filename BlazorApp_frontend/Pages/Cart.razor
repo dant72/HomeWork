@@ -9,18 +9,18 @@
 {
     private void AddProductToCart(int productId)
     {
-       // var product = _cart.Products.First(p => p.Key.Id == productId);
-       // _cart.AddAsync(product.Key);
+        // var product = _cart.Products.First(p => p.Key.Id == productId);
+        // _cart.AddAsync(product.Key);
     }
     private void RemoveProductFromCart(int productId)
     {
-       // var product = _cart.Products.First(p => p.Key.Id == productId);
-       // _cart.RemoveAsync(product.Key);
+        // var product = _cart.Products.First(p => p.Key.Id == productId);
+        // _cart.RemoveAsync(product.Key);
     }
 
     private void ClearCart()
     {
-            _apiClient.AddCart(new HttpModels.Cart());
+        _apiClient.AddCart(new HttpModels.Cart() { AccountId = 1});
     }
 }
 

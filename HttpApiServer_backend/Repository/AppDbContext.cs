@@ -19,7 +19,7 @@ public class AppDbContext : DbContext
    {
       
       //Database.EnsureDeleted();
-      //Database.EnsureCreated();
+      Database.EnsureCreated();
       //CreateDB();
 
    }
@@ -36,7 +36,7 @@ public class AppDbContext : DbContext
       Products.Add(new Product(3,"orange", 150,1, "https://media.istockphoto.com/photos/whole-cross-section-and-quarter-of-fresh-organic-navel-orange-with-picture-id1227301369?s=612x612"));
       Products.Add(new Product(4,"corn", 50, 2, "https://media.istockphoto.com/photos/fresh-corn-with-green-leaves-still-life-vegetables-picture-id597955650?s=612x612"));
       var cart = new Cart(1, acc);
-      cart.CartItems.Add(new CartItem(){Product = product, Count = 2});
+      CartItems.Add(new CartItem(){Product = product, Count = 2, CartId = cart.Id});
       Carts.Add(cart);
       
 

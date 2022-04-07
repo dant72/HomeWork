@@ -29,11 +29,15 @@ public class CatalogService : ICatalogService
         return await _uow.CartRepository.GetAll();
     }
 
-    public Task AddCart(Cart cart)
+    public async Task AddCart(Cart cart)
     {
-        _uow.CartRepository.Add(cart);
-        _uow.SaveChangesAsync();
-        return Task.CompletedTask;
+        var existCart = await _uow.CartRepository.GetByAccountId(cart.AccountId);
+        if (existCart == null)
+        {
+            await _uow.CartRepository.Add(cart);
+            await _uow.CartItemRepository.AddRange(cart.CartItems);
+            await _uow.SaveChangesAsync();
+        }
     }
 
     public async Task<IReadOnlyList<Category>> GetCategories()
