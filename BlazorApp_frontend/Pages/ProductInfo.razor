@@ -21,16 +21,22 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var products= await _apiClient.GetProducts();
-        _products = products.ToList();
-        Product = _products.First(i => i.Id == ProductId);
-        //_account = await _apiClient.GetAccount();
-        _cart = await _apiClient.GetCart();
-        var item = _cart.CartItems.FirstOrDefault(it => it.ProductId ==  Product?.Id);
-        if (item != null)
-            Count = item.Count;
-        else
-            Count = 0;
+        try
+        {
+            var products= await _apiClient.GetProducts();
+            _products = products.ToList();
+            Product = _products.First(i => i.Id == ProductId);
+            _cart = await _apiClient.GetCart();
+            var item = _cart.CartItems.FirstOrDefault(it => it.ProductId ==  Product?.Id);
+            if (item != null)
+                Count = item.Count;
+            else
+                Count = 0;
+        }
+        catch
+        {
+            
+        }
 
     }
 
@@ -72,14 +78,21 @@
 
     int Count { get; set; } = 0;
 }
-
-<div><img src="@Product?.Image" width="300" height="300"/></div>
-<br><div>@Product?.Name :: @Product?.Price</div>
-
 @if (_cart != null)
 {
-    <br>
-    <br/> <input type="submit" value="+" @onclick="AddProductToCart">
-    <div>Кол-во: @Count</div>
-    <input type="submit" value="-" @onclick="RemoveProductFromCart" >
+
+    <div><img src="@Product?.Image" width="300" height="300"/></div>
+    <br><div>@Product?.Name :: @Product?.Price</div>
+
+    @if (_cart != null)
+    {
+        <br>
+        <br/> <input type="submit" value="+" @onclick="AddProductToCart">
+        <div>Кол-во: @Count</div>
+        <input type="submit" value="-" @onclick="RemoveProductFromCart" >
+    }
+}
+else
+{
+<div>No auth</div>
 }

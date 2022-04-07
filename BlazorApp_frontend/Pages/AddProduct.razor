@@ -3,20 +3,19 @@
 @using HttpApiClient
 
 @inject IClock _clock
-@inject ICatalog _catalog
 @inject ApiClient _apiClient
 
 @code {
     
-    private List<Product> _products;
-    private List<Category> _categories;
+    private List<Product>? _products;
+    private List<Category>? _categories;
 
     protected override async Task OnInitializedAsync()
     {
         var products = await _apiClient.GetProducts();
-        _products = products.ToList();
+        _products = products?.ToList();
         var categories= await _apiClient.GetCategories();
-        _categories = categories.ToList();
+        _categories = categories?.ToList();
     }
 
     string name ="";
@@ -33,13 +32,14 @@
     }
     
 }
-
+@if (_products != null && _categories != null)
+{
 <h2>Add Product</h2>
 <Form onsubmit="@AddProductToCatalog">
 
     <table>
   <tr><td>Category:</td><td> <select @bind="categoryId">
-      @foreach (var item in _categories)
+      @foreach (var item in (_categories))
       {
           <option value="@item.Id">@item.Name</option>
       }
@@ -58,7 +58,7 @@
     @foreach (var @category in _products.GroupBy(x => x.CategoryId))
     {
         <li>
-            <ul><div style="font-size: 40px;">@_categories.First(i => i.Id == category.Key).Name</div>
+            <ul><div style="font-size: 40px;">@_categories.FirstOrDefault(i => i.Id == category.Key)?.Name</div>
                 @foreach (var product in category)
                 {
                     <li><img src="@product.Image" width="100" height="100"/><div>@product.Name :: @product.Price</div></li> 
@@ -66,3 +66,4 @@
             </ul></li>
     }
 </ul>
+}
