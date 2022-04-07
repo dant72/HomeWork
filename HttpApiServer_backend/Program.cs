@@ -1,5 +1,6 @@
 using HttpApiServer_backend;
 using HttpApiServer_backend.Controllers;
+using HttpApiServer_backend.Controllers.Filters;
 using HttpModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -20,6 +21,7 @@ builder.Services.AddSingleton<IPasswordHasher<Account>, PasswordHasher<Account>>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWorkEf>();
 builder.Services.AddScoped<ICartRepository, CardRepository>();
 builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+builder.Services.AddScoped<AuthFilter>();
 
 
 builder.Services.AddCors();
@@ -84,6 +86,7 @@ app.UseCors(policy =>
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",

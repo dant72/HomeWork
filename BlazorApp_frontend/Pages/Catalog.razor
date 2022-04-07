@@ -12,21 +12,30 @@
 @code {
     private List<Product> _products = new List<Product>();
     private List<Category> _categories = new List<Category>();
+    private string? message;
 
     protected override async Task OnInitializedAsync()
     {
-        var products = await _apiClient.GetProducts();
-        var categories= await _apiClient.GetCategories();
-        
-        if (products != null && categories != null)
+        try
         {
-            _categories = categories.ToList();
-            _products = products.ToList();
+            var products = await _apiClient.GetProducts();
+            var categories = await _apiClient.GetCategories();
+
+            if (products != null && categories != null)
+            {
+                _categories = categories.ToList();
+                _products = products.ToList();
+            }
         }
-        await base.OnInitializedAsync();
+        catch(Exception ex)
+        {
+            message = ex.Message;
+        }
     }
 }
 
+@if(message == null)
+{
 <ul>
     @foreach (var @category in _products.GroupBy(x => x.CategoryId))
     {
@@ -40,3 +49,8 @@
         </li>
     }
 </ul>
+}
+else
+{
+    <div>@message</div>
+}

@@ -16,6 +16,7 @@
 
     private List<Product> _products;
     private List<Category> _categories;
+    private string? message;
 
     private HttpModels.Cart? _cart;
 
@@ -33,9 +34,9 @@
             else
                 Count = 0;
         }
-        catch
+        catch(Exception ex)
         {
-            
+            message = ex.Message;
         }
 
     }
@@ -78,7 +79,7 @@
 
     int Count { get; set; } = 0;
 }
-@if (_cart != null)
+@if (message == null)
 {
 
     <div><img src="@Product?.Image" width="300" height="300"/></div>
@@ -94,5 +95,6 @@
 }
 else
 {
-<div>No auth</div>
+<div>@message</div>
+}
 }

@@ -2,8 +2,11 @@ using HttpModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using HttpApiServer_backend.Controllers.Filters;
 
 namespace HttpApiServer_backend.Controllers;
+
+[AuthFilter]
 public class CatalogController : ControllerBase
 {
     private ICatalogService _catalog;

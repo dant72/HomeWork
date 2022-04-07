@@ -6,16 +6,25 @@
 @inject ApiClient _apiClient
 
 @code {
-    
+
     private List<Product>? _products;
     private List<Category>? _categories;
+    private string? message;
 
     protected override async Task OnInitializedAsync()
     {
-        var products = await _apiClient.GetProducts();
-        _products = products?.ToList();
-        var categories= await _apiClient.GetCategories();
-        _categories = categories?.ToList();
+        try
+        {
+
+            var products = await _apiClient.GetProducts();
+            _products = products.ToList();
+            var categories = await _apiClient.GetCategories();
+            _categories = categories.ToList();
+        }
+        catch(Exception ex)
+        {
+            message = ex.Message;
+        }
     }
 
     string name ="";
@@ -32,38 +41,46 @@
     }
     
 }
-@if (_products != null && _categories != null)
-{
+
 <h2>Add Product</h2>
-<Form onsubmit="@AddProductToCatalog">
-
-    <table>
-  <tr><td>Category:</td><td> <select @bind="categoryId">
-      @foreach (var item in (_categories))
-      {
-          <option value="@item.Id">@item.Name</option>
-      }
-  </select></td></tr>
-  <tr><td>Name:</td><td><input type="text" @bind="name" /></td></tr>
-  <tr><td>Price:</td><td> <input type="text" @bind="price" /></td></tr>
-  <tr><td>ImageURL:</td><td> <input type="text" @bind="imageURL" /></td></tr>
-
-  <tr><td><input type="submit" value="Add product"/></td></tr>
-  </table>
-
-</Form>
-
-
-<ul>
-    @foreach (var @category in _products.GroupBy(x => x.CategoryId))
+@if (message == null)
+{
+    if (_categories != null && _products != null)
     {
-        <li>
-            <ul><div style="font-size: 40px;">@_categories.FirstOrDefault(i => i.Id == category.Key)?.Name</div>
-                @foreach (var product in category)
-                {
-                    <li><img src="@product.Image" width="100" height="100"/><div>@product.Name :: @product.Price</div></li> 
-                }
-            </ul></li>
+        <Form onsubmit="@AddProductToCatalog">
+
+            <table>
+                <tr><td>Category:</td><td> <select @bind="categoryId">
+                            @foreach (var item in (_categories))
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select></td></tr>
+                <tr><td>Name:</td><td><input type="text" @bind="name" /></td></tr>
+                <tr><td>Price:</td><td> <input type="text" @bind="price" /></td></tr>
+                <tr><td>ImageURL:</td><td> <input type="text" @bind="imageURL" /></td></tr>
+
+                <tr><td><input type="submit" value="Add product"/></td></tr>
+            </table>
+
+        </Form>
+
+
+        <ul>
+            @foreach (var @category in _products.GroupBy(x => x.CategoryId))
+            {
+                <li>
+                    <ul><div style="font-size: 40px;">@_categories.FirstOrDefault(i => i.Id == category.Key)?.Name</div>
+                        @foreach (var product in category)
+                        {
+                            <li><img src="@product.Image" width="100" height="100"/><div>@product.Name :: @product.Price</div></li>
+                        }
+                    </ul></li>
+            }
+        </ul>
     }
-</ul>
+}
+else
+{
+    <div>@message</div>
 }
