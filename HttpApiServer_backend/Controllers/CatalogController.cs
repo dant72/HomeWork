@@ -1,5 +1,7 @@
 using HttpModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace HttpApiServer_backend.Controllers;
 public class CatalogController : ControllerBase
@@ -31,9 +33,17 @@ public class CatalogController : ControllerBase
         await _catalog.AddProduct(product);
     }
 
-    [HttpPost]
-    public async Task AddCart([FromBody]Cart cart)
+    //[HttpPost]
+    //public async Task AddCart([FromBody]Cart cart)
+    //{
+    //    await _catalog.AddCart(cart);
+    //}
+    
+    [Authorize]
+    [HttpGet]
+    public async Task<Cart?> GetCart()
     {
-        await _catalog.AddCart(cart);
+        var accountId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        return await _catalog.GetCart(accountId);
     }
 }

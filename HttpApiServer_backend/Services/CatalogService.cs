@@ -29,7 +29,7 @@ public class CatalogService : ICatalogService
         return await _uow.CartRepository.GetAll();
     }
 
-    public async Task AddCart(Cart cart)
+    /*public async Task AddCart(Cart cart)
     {
         var existCart = await _uow.CartRepository.GetByAccountId(cart.AccountId);
         if (existCart == null)
@@ -38,7 +38,12 @@ public class CatalogService : ICatalogService
             await _uow.CartItemRepository.AddRange(cart.CartItems);
             await _uow.SaveChangesAsync();
         }
-    }
+        else
+        {
+            await _uow.CartRepository.Update(cart);
+            await _uow.SaveChangesAsync();
+        }
+    }*/
 
     public async Task<IReadOnlyList<Category>> GetCategories()
     {
@@ -62,7 +67,12 @@ public class CatalogService : ICatalogService
     {
         return _uow.ProductRepository.GetById(id);
     }
-    
+
+    public async Task<Cart?> GetCart(int accountId)
+    {
+        return await _uow.CartRepository.GetByAccountId(accountId);
+    }
+
     private decimal DayOfWeekPrice(DateTime date)
     {
         switch (date.Date.DayOfWeek)

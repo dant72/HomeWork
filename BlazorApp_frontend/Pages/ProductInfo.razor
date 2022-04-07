@@ -3,8 +3,6 @@
 @using HttpApiClient
 
 @inject IClock _clock
-@inject ICatalog _catalog
-@inject ICart _cart
 @inject ApiClient _apiClient
 
 <h3>Product</h3>
@@ -13,36 +11,50 @@
 @code {
     [Parameter]
     public int ProductId { get; set; }
- 
-    public Product Product { get; set; }
+
+    public Product? Product { get; set; }
 
     private List<Product> _products;
     private List<Category> _categories;
+
+    private Account? _account;
+    private HttpModels.Cart? _cart;
 
     protected override async Task OnInitializedAsync()
     {
         var products= await _apiClient.GetProducts();
         _products = products.ToList();
-
         Product = _products.First(i => i.Id == ProductId);
+
+        _account = await _apiClient.GetAccount();
+        _cart = await _apiClient.GetCart();
     }
-    
-    public void AddProductToCart()
+
+    public async void AddProductToCart()
     {
-        _cart.AddAsync(Product);
-        Count = _cart.Products.First(p => p.Key.Id == ProductId).Value;
+        var item = _cart.CartItems.FirstOrDefault(it => it.ProductId ==  Product?.Id);
+        if (item == null)
+        {
+            _cart.CartItems.Add(new CartItem() { ProductId = Product.Id, Count = 1 });
+        }
+        else
+        {
+            item.Count++;
+        }
+        await _apiClient.AddCart(_cart);
+        // Count = _cart.Products.First(p => p.Key.Id == ProductId).Value;
     }
     public void RemoveProductFromCart()
     {
-        _cart.RemoveAsync(Product);
-        Count = _cart.Products.FirstOrDefault(p => p.Key.Id == ProductId).Value;
+        //_cart.RemoveAsync(Product);
+       // Count = _cart.Products.FirstOrDefault(p => p.Key.Id == ProductId).Value;
     }
 
     int Count { get; set; } = 0;
 }
 
-<div><img src="@Product.Image" width="300" height="300"/></div>
-<br><div>@Product.Name :: @Product.Price</div>
+<div><img src="@Product?.Image" width="300" height="300"/></div>
+<br><div>@Product?.Name :: @Product?.Price</div>
 <br>
 <br/> <input type="submit" value="+" @onclick="AddProductToCart">
 <div>Кол-во: @Count</div>

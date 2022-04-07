@@ -41,9 +41,10 @@ public class RegistrationService : IRegistrationService
             if (accByLogin != null || accByEmail != null)
                 throw new AccountException();
 
-
-            _uow.AccountRepository.Add(account); 
-            _uow.SaveChangesAsync();
+            var cart = new Cart() { Account = account };
+            await _uow.AccountRepository.Add(account);
+            await _uow.CartRepository.Add(cart);
+            await _uow.SaveChangesAsync();
         }
     }
     

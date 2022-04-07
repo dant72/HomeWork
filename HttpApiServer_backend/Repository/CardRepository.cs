@@ -18,5 +18,7 @@ public class CardRepository : EfRepository<Cart>, ICartRepository
     }
 
     public Task<Cart> GetByAccountId(int accountId)
-        => _entities.FirstOrDefaultAsync(it => it.AccountId == accountId);
+        => _entities
+        .Include("CartItems")
+        .FirstOrDefaultAsync(it => it.AccountId == accountId);
 }

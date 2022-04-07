@@ -66,7 +66,12 @@ public class ApiClient
     {
         return _httpClient.GetFromJsonAsync<Account>($"{_host}/Registration/GetAccount");
     }
-    
+
+    public Task<Cart?> GetCart()
+    {
+        return _httpClient.GetFromJsonAsync<Cart>($"{_host}/Catalog/GetCart");
+    }
+
     public Task<Account?> GetAccountByEmail(string email)
     {
         return _httpClient.GetFromJsonAsync<Account>($"{_host}/Registration/GetAccountByEmail?email={email}");

@@ -58,10 +58,9 @@ public class RegistrationController : ControllerBase
       var userEmail = User.FindFirstValue(ClaimTypes.Email);
       return  await _registrationService.GetAccountByEmail(userEmail);
    }
-   [Authorize]
+
    public Task<IReadOnlyList<Account>> Accounts()
    {
-      User.FindFirstValue((ClaimTypes.Email));
       return  _registrationService.GetAccounts();
    }
    
