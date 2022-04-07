@@ -29,21 +29,16 @@ public class CatalogService : ICatalogService
         return await _uow.CartRepository.GetAll();
     }
 
-    /*public async Task AddCart(Cart cart)
+    public async Task<IReadOnlyList<CartItem>> GetCardItems()
     {
-        var existCart = await _uow.CartRepository.GetByAccountId(cart.AccountId);
-        if (existCart == null)
-        {
-            await _uow.CartRepository.Add(cart);
-            await _uow.CartItemRepository.AddRange(cart.CartItems);
-            await _uow.SaveChangesAsync();
-        }
-        else
-        {
-            await _uow.CartRepository.Update(cart);
-            await _uow.SaveChangesAsync();
-        }
-    }*/
+        return await _uow.CartItemRepository.GetAll();
+    }
+
+    public async Task UpdateCart(Cart cart)
+    {
+        await _uow.CartRepository.Update(cart);
+        await _uow.SaveChangesAsync();
+    }
 
     public async Task<IReadOnlyList<Category>> GetCategories()
     {
@@ -62,7 +57,25 @@ public class CatalogService : ICatalogService
         _uow.SaveChangesAsync(); 
         return Task.CompletedTask;
     }
-    
+
+    public async Task AddCartItem(CartItem cartItem)
+    {
+        await _uow.CartItemRepository.Add(cartItem);
+        await _uow.SaveChangesAsync();
+    }
+
+    public async Task UpdateCartItem(CartItem cartItem)
+    {
+        await _uow.CartItemRepository.Update(cartItem);
+        await _uow.SaveChangesAsync();
+    }
+
+    public async Task RemoveCartItem(CartItem cartItem)
+    {
+        await _uow.CartItemRepository.Remove(cartItem);
+        await _uow.SaveChangesAsync();
+    }
+
     public Task GetProduct(int id)
     {
         return _uow.ProductRepository.GetById(id);

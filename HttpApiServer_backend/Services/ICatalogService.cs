@@ -10,6 +10,10 @@ public interface ICatalogService
     Task GetProduct(int id);
     Task<int> GeNextId();
     Task<IReadOnlyList<Cart>> GetCards();
-    //Task AddCart(Cart cart);
+    Task UpdateCart(Cart cart);
     Task<Cart?> GetCart(int accountId);
+    Task<IReadOnlyList<CartItem>> GetCardItems();
+    Task AddCartItem(CartItem cartItem);
+    Task UpdateCartItem(CartItem cartItem);
+    Task RemoveCartItem(CartItem cartItem);
 }

@@ -30,9 +30,24 @@ public class ApiClient
         return _httpClient.PostAsJsonAsync($"{_host}/Catalog/AddProduct", product);
     }
 
-    public Task AddCart(Cart cart)
+    public Task AddCartItem(CartItem cartItem)
     {
-        return _httpClient.PostAsJsonAsync($"{_host}/Catalog/AddCart", cart);
+        return _httpClient.PostAsJsonAsync($"{_host}/Catalog/AddCartItem", cartItem);
+    }
+
+    public Task UpdateCartItem(CartItem cartItem)
+    {
+        return _httpClient.PostAsJsonAsync($"{_host}/Catalog/UpdateCartItem", cartItem);
+    }
+
+    public Task RemoveCartItem(CartItem cartItem)
+    {
+        return _httpClient.PostAsJsonAsync($"{_host}/Catalog/RemoveCartItem", cartItem);
+    }
+
+    public Task UpdateCart(Cart cart)
+    {
+        return _httpClient.PostAsJsonAsync($"{_host}/Catalog/UpdateCart", cart);
     }
 
     public Task Registration(AccountRequestModel account)

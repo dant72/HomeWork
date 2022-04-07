@@ -31,4 +31,10 @@ public class EfRepository<TEntity> : IRepository<TEntity> where TEntity: class, 
         _dbContext.Entry(TEntity).State = EntityState.Modified;
         //await _dbContext.SaveChangesAsync();
     }
+
+    public virtual Task Remove(TEntity entity)
+    {
+        _entities.Remove(entity);
+        return Task.CompletedTask;
+    }
 }

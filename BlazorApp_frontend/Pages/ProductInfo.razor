@@ -25,29 +25,50 @@
         var products= await _apiClient.GetProducts();
         _products = products.ToList();
         Product = _products.First(i => i.Id == ProductId);
-
-        _account = await _apiClient.GetAccount();
+        //_account = await _apiClient.GetAccount();
         _cart = await _apiClient.GetCart();
+        var item = _cart.CartItems.FirstOrDefault(it => it.ProductId ==  Product?.Id);
+        if (item != null)
+            Count = item.Count;
+        else
+            Count = 0;
+
     }
 
     public async void AddProductToCart()
     {
+        _cart = await _apiClient.GetCart();
         var item = _cart.CartItems.FirstOrDefault(it => it.ProductId ==  Product?.Id);
         if (item == null)
         {
-            _cart.CartItems.Add(new CartItem() { ProductId = Product.Id, Count = 1 });
+            item = new CartItem() { ProductId = Product.Id, Count = 1, CartId = _cart.Id };
+            await _apiClient.AddCartItem(item);
         }
         else
         {
             item.Count++;
+            await _apiClient.UpdateCartItem(item);
+                       
         }
-        await _apiClient.AddCart(_cart);
-        // Count = _cart.Products.First(p => p.Key.Id == ProductId).Value;
+        Count = item.Count;
+        StateHasChanged();   
     }
-    public void RemoveProductFromCart()
+
+    public async void RemoveProductFromCart()
     {
-        //_cart.RemoveAsync(Product);
-       // Count = _cart.Products.FirstOrDefault(p => p.Key.Id == ProductId).Value;
+        _cart = await _apiClient.GetCart();
+        var item = _cart.CartItems.FirstOrDefault(it => it.ProductId ==  Product?.Id);
+        if (item != null)
+        {
+            item.Count--;
+            await _apiClient.UpdateCartItem(item);
+            if (item.Count == 0)
+            await _apiClient.RemoveCartItem(item);
+
+            Count = item.Count;              
+        }
+        
+        StateHasChanged();   
     }
 
     int Count { get; set; } = 0;
@@ -55,7 +76,11 @@
 
 <div><img src="@Product?.Image" width="300" height="300"/></div>
 <br><div>@Product?.Name :: @Product?.Price</div>
-<br>
-<br/> <input type="submit" value="+" @onclick="AddProductToCart">
-<div>Кол-во: @Count</div>
-<input type="submit" value="-" @onclick="RemoveProductFromCart" >
+
+@if (_cart != null)
+{
+    <br>
+    <br/> <input type="submit" value="+" @onclick="AddProductToCart">
+    <div>Кол-во: @Count</div>
+    <input type="submit" value="-" @onclick="RemoveProductFromCart" >
+}

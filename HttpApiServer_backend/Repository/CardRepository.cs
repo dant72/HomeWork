@@ -12,10 +12,16 @@ public class CardRepository : EfRepository<Cart>, ICartRepository
     public override async Task<IReadOnlyList<Cart>> GetAll()
     {
         return await _entities
-            //.Include("Account")
-            //.Include("Items")
+            .Include("Account")
+            .Include("CartItems")
             .ToListAsync();
     }
+
+    //public override async Task Update(Cart cart)
+    //{
+    //    _dbContext.Entry(cart).State = EntityState.Modified;
+    //    _dbContext.Entry(cart).Navigations
+    //}
 
     public Task<Cart> GetByAccountId(int accountId)
         => _entities
