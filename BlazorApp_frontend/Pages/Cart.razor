@@ -7,22 +7,87 @@
 
 @code
 {
-    private void AddProductToCart(int productId)
+    private HttpModels.Cart? _cart;
+
+    private List<Product> _products;
+    private List<Category> _categories;
+
+    protected override async Task OnInitializedAsync()
     {
-        // var product = _cart.Products.First(p => p.Key.Id == productId);
-        // _cart.AddAsync(product.Key);
+        try
+        {
+            _cart = await _apiClient.GetCart();
+        }
+        catch
+        {
+            
+        }
     }
-    private void RemoveProductFromCart(int productId)
+
+    public async void AddProductToCart(int productId)
     {
-        // var product = _cart.Products.First(p => p.Key.Id == productId);
-        // _cart.RemoveAsync(product.Key);
+
+        var item = _cart.CartItems.FirstOrDefault(it => it.ProductId == productId);
+        if (item == null)
+        {
+            item = new CartItem() { ProductId = productId, Count = 1, CartId = _cart.Id };
+            await _apiClient.AddCartItem(item);
+        }
+        else
+        {
+            item.Count++;
+            await _apiClient.UpdateCartItem(item);
+
+        }
+        Count = item.Count;
+        StateHasChanged();   
     }
+
+    public async void RemoveProductFromCart(int productId)
+    {
+        _cart = await _apiClient.GetCart();
+        var item = _cart.CartItems.FirstOrDefault(it => it.ProductId ==  productId);
+        if (item != null)
+        {
+            item.Count--;
+            if (item.Count == 0)
+                await _apiClient.RemoveCartItem(item);
+            else
+                await _apiClient.UpdateCartItem(item);
+
+            Count = item.Count;              
+        }
+
+        StateHasChanged();   
+    }
+
+    int Count { get; set; } = 0;
 
     private void ClearCart()
     {
-        //_apiClient.AddCart(new HttpModels.Cart() { AccountId = 1});
+        
     }
 }
 
+@if(_cart != null)
+{
 <button class="btn btn-primary" @onclick="ClearCart">Clear cart</button><br>
 
+<ul>
+@foreach (var @cartItem in _cart.CartItems)
+{
+    <li>
+        <a href="/ProductInfo/@cartItem.Product.Id"><img src="@cartItem.Product.Image" width="100" height="100"/></a>
+        <br>
+        <div>@cartItem.Product.Name :: @cartItem.Product.Price</div>
+        <br/> <input type="submit" value="+" @onclick="@(e => AddProductToCart(@cartItem.Product.Id))">
+        <div>Кол-во: @cartItem.Count</div>
+        <input type="submit" value="-" @onclick="@(e => RemoveProductFromCart(@cartItem.Product.Id))" >
+    </li>
+}
+</ul>
+}
+else
+{
+    <div>No auth</div>
+}

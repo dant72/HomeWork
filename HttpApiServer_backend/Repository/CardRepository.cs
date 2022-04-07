@@ -12,8 +12,8 @@ public class CardRepository : EfRepository<Cart>, ICartRepository
     public override async Task<IReadOnlyList<Cart>> GetAll()
     {
         return await _entities
+            .Include("CartItems.Product")
             .Include("Account")
-            .Include("CartItems")
             .ToListAsync();
     }
 
@@ -23,8 +23,8 @@ public class CardRepository : EfRepository<Cart>, ICartRepository
     //    _dbContext.Entry(cart).Navigations
     //}
 
-    public Task<Cart> GetByAccountId(int accountId)
+    public Task<Cart?> GetByAccountId(int accountId)
         => _entities
-        .Include("CartItems")
+        .Include("CartItems.Product")
         .FirstOrDefaultAsync(it => it.AccountId == accountId);
 }

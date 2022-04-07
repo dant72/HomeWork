@@ -84,7 +84,7 @@ public class ApiClient
 
     public Task<Cart?> GetCart()
     {
-        return _httpClient.GetFromJsonAsync<Cart>($"{_host}/Catalog/GetCart");
+        return _httpClient.GetFromJsonAsync<Cart?>($"{_host}/Catalog/GetCart");
     }
 
     public Task<Account?> GetAccountByEmail(string email)

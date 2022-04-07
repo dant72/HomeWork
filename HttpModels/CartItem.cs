@@ -4,6 +4,7 @@ namespace HttpModels;
 
 public class CartItem : IEntity
 {
+    private Product product;
     public int Id { get; set; }
 
     public int ProductId { get; set; }
