@@ -2,7 +2,7 @@ using HttpModels;
 
 namespace HttpApiServer_backend;
 
-public interface ICartRepository : IRepository<Cart2>
+public interface ICartRepository : IRepository<Cart>
 {
-    Task<Cart2> GetByAccountId(int accountId);
+    Task<Cart> GetByAccountId(int accountId);
 }

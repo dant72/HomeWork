@@ -20,7 +20,7 @@ public class CatalogController : ControllerBase
         return  _catalog.GetCategories();
     }
 
-    public Task<IReadOnlyList<Cart2>> Carts()
+    public Task<IReadOnlyList<Cart>> Carts()
     {
         return _catalog.GetCards();
     }
@@ -32,7 +32,7 @@ public class CatalogController : ControllerBase
     }
 
     [HttpPost]
-    public async Task AddCart([FromBody] Cart2 cart)
+    public async Task AddCart([FromBody]Cart cart)
     {
         await _catalog.AddCart(cart);
     }

@@ -12,7 +12,7 @@ namespace HttpApiServer_backend.Controllers
 
         public void OnException(ExceptionContext context)
         {
-            var message = TryGetUserMessage
+            //var message = TryGetUserMessage
         }
     }
 }

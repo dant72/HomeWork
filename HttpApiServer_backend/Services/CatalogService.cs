@@ -24,12 +24,12 @@ public class CatalogService : ICatalogService
         return pr.Select(p => new Product(p.Id, p.Name, p.Price * DayOfWeekPrice(_clock.LocalTimeNow) * UserAgentPrice(""), p.CategoryId, p.Image)).ToList();
     }
 
-    public async Task<IReadOnlyList<Cart2>> GetCards()
+    public async Task<IReadOnlyList<Cart>> GetCards()
     {
         return await _uow.CartRepository.GetAll();
     }
 
-    public Task AddCart(Cart2 cart)
+    public Task AddCart(Cart cart)
     {
         _uow.CartRepository.Add(cart);
         _uow.SaveChangesAsync();
