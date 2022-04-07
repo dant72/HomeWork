@@ -1,4 +1,5 @@
 using HttpApiServer_backend;
+using HttpApiServer_backend.Controllers;
 using HttpModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -25,7 +26,10 @@ builder.Services.AddCors();
 
 builder.Services.AddDbContext<AppDbContext>(
     options => options.UseSqlite($"Data Source={dbPath}"));
-builder.Services.AddControllers();
+builder.Services.AddControllers(optionts =>
+{
+    optionts.Filters.Add<AccountFilter>();
+});
 JwtConfig jwtConfig = builder.Configuration
     .GetSection("JwtConfig")
     .Get<JwtConfig>();
