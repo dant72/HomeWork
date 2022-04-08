@@ -13,4 +13,5 @@ public interface IRegistrationService
     Task<Account> GetAccountByEmail(string email);
 
     Task<IReadOnlyList<Account>> GetAccounts();
+    Task BanAccount(Account account);
 }

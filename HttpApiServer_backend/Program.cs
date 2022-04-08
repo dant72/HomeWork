@@ -31,7 +31,9 @@ builder.Services.AddDbContext<AppDbContext>(
 builder.Services.AddControllers(optionts =>
 {
     optionts.Filters.Add<AccountFilter>();
+    optionts.Filters.Add<BanUserFilter>();
     optionts.Filters.Add<TimeFilter>();
+    
 });
 JwtConfig jwtConfig = builder.Configuration
     .GetSection("JwtConfig")

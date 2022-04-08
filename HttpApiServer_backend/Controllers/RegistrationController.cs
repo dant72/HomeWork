@@ -55,8 +55,11 @@ public class RegistrationController : ControllerBase
    {
       return  _registrationService.GetAccounts();
    }
-   
-   
+    [HttpPost]
+    public async Task BanAccount([FromBody] Account account)
+    {
+        await _registrationService.BanAccount(account);
+    }
 
    private Account Hash(AccountRequestModel account)
    {

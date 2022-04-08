@@ -52,6 +52,13 @@ public class RegistrationService : IRegistrationService
     {
         return _uow.AccountRepository.GetById(id);
     }
+
+    public async Task BanAccount(Account account)
+    {
+        account.IsBanned = true;
+        await _uow.AccountRepository.Update(account);
+        await _uow.SaveChangesAsync();
+    }
     
     public Task<Account> GetAccountByEmail(string email)
     {

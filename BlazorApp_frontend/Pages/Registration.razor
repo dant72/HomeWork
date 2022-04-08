@@ -45,6 +45,11 @@
         _account2 = await _apiClient.Autorization(account);
         StateHasChanged();
     }
+
+    private async void BanUser()
+    {
+        await _apiClient.BanAccount(_account);
+    }
 }
 
 <Form onsubmit="@AccountRegistration">
@@ -91,4 +96,12 @@ else
     <tr><td>Login:</td><td>@_account?.Login</td></tr>
     <tr><td>Password:</td><td>@_account?.HashPassword</td></tr>
     <tr><td>Email:</td><td> @_account?.Email</td></tr>
+}
+@if (_account != null)
+{
+    <br />
+    <h1>Banned User</h1>
+    <Form onsubmit="@BanUser">
+    <input type="submit" value="Banned User"/>
+    </Form>
 }

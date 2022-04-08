@@ -91,4 +91,9 @@ public class ApiClient
     {
         return _httpClient.GetFromJsonAsync<Account>($"{_host}/Registration/GetAccountByEmail?email={email}");
     }
+
+    public Task BanAccount(Account account)
+    {
+        return _httpClient.PostAsJsonAsync($"{_host}/Registration/BanAccount", account);
+    }
 }

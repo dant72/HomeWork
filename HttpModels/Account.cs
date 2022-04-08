@@ -8,6 +8,7 @@ public class Account : IEntity
         Login = login;
         Email = email;
         HashPassword = hashPassword;
+        IsBanned = false;
     }
 
     public Account()
@@ -16,6 +17,7 @@ public class Account : IEntity
         Email = "None";
         Login = "Default";
         HashPassword = "";
+        IsBanned = false;
     }
 
     public int Id { get; set; }
@@ -25,5 +27,7 @@ public class Account : IEntity
     public string Login { get; set; }
     
     public string HashPassword { get; set; }
+
+    public bool IsBanned { get; set; }
     
 }
