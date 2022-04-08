@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace HttpApiServer_backend.Controllers
 {
-    public class AccountFilter : Attribute, IExceptionFilter
+    public class AccountFilter : IExceptionFilter
     {
         private readonly ILogger<AccountFilter> _logger;
         public AccountFilter(ILogger<AccountFilter> logger)
