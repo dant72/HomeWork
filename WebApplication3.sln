@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp_frontend", "Blazo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpApiClient", "HttpApiClient\HttpApiClient.csproj", "{13C0225C-EF6E-49C0-B869-8DD357E3999E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpApiServer_backend.Tests", "HttpApiServer_backend.Tests\HttpApiServer_backend.Tests.csproj", "{C2635556-8FAF-4F3C-B66A-61E9666CDD44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{13C0225C-EF6E-49C0-B869-8DD357E3999E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13C0225C-EF6E-49C0-B869-8DD357E3999E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13C0225C-EF6E-49C0-B869-8DD357E3999E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2635556-8FAF-4F3C-B66A-61E9666CDD44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2635556-8FAF-4F3C-B66A-61E9666CDD44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2635556-8FAF-4F3C-B66A-61E9666CDD44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2635556-8FAF-4F3C-B66A-61E9666CDD44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
