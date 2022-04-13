@@ -50,6 +50,11 @@ public class ApiClient
         return _httpClient.PostAsJsonAsync($"{_host}/Catalog/UpdateCart", cart);
     }
 
+    public Task SendEmail(MessageInfo message)
+    {
+        return _httpClient.PostAsJsonAsync($"{_host}/Email/Send", message);
+    }
+
     public Task Registration(AccountRequestModel account)
     {
         return _httpClient.PostAsJsonAsync($"{_host}/Registration/Registration", account);

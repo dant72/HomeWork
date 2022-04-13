@@ -1,6 +1,7 @@
 @page "/Cart"
 @using HttpApiClient
 @using HttpModels
+@using System.Text.Json
 
 @inject ApiClient _apiClient
 
@@ -11,6 +12,7 @@
     private List<Product>? _products;
     private List<Category>? _categories;
     private string? message;
+    private string? email;
 
     protected override async Task OnInitializedAsync()
     {
@@ -58,14 +60,22 @@
             Count = item.Count;              
         }
 
-        StateHasChanged();   
+        StateHasChanged();
     }
 
     int Count { get; set; } = 0;
 
-    private void ClearCart()
+    private async void SendEmail()
     {
-        
+        var json = JsonSerializer.Serialize(_cart);
+        var message = new MessageInfo()
+            {
+                Email = email,
+                Subject = "Cart",
+                Body = json
+            };
+
+        await _apiClient.SendEmail(message);
     }
 }
 
@@ -73,7 +83,9 @@
 
 @if(message == null)
 {
-    <button class="btn btn-primary" @onclick="ClearCart">Clear cart</button><br>
+    <button class="btn btn-primary" @onclick="SendEmail">Sent cart to</button>
+    <input type="email" @bind="email" >
+    <br />
     if (_cart != null)
     {
         <ul>

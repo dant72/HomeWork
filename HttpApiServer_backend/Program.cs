@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using WebApplication3;
 
 var dbPath = "myapp.db";
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,8 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWorkEf>();
 builder.Services.AddScoped<ICartRepository, CardRepository>();
 builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
 builder.Services.AddScoped<AuthFilter>();
+builder.Services.AddScoped<ISmtpEmailSender, SmtpEmailSender>();
+builder.Services.Configure<SmtpCredentials>(builder.Configuration.GetSection("SmtpCredentials"));
 
 
 builder.Services.AddCors();
