@@ -6,7 +6,6 @@ using HttpApiServer_backend.Controllers.Filters;
 
 namespace HttpApiServer_backend.Controllers;
 
-[AuthFilter]
 public class CatalogController : ControllerBase
 {
     private ICatalogService _catalog;

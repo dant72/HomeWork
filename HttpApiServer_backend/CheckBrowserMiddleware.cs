@@ -15,7 +15,7 @@ public class CheckBrowserMiddleware
     public async Task InvokeAsync(HttpContext context)
     {
         _logger.Log(LogLevel.Warning, context.Request.Headers.UserAgent);
-        if (!context.Request.Headers.UserAgent.ToString().Contains("Edg"))
+        if (context.Request.Headers.UserAgent.ToString().Contains("Edg"))
         {
             await _next(context);
             _logger.Log(LogLevel.Information, "Is not Edge");

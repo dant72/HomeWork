@@ -21,7 +21,7 @@ namespace HttpApiServer_backend.Tests
 
             await middleware.InvokeAsync(context);
 
-            Assert.False(passed);
+            Assert.True(passed);
         }
     }
 }
