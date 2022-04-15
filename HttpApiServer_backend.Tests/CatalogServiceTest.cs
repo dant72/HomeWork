@@ -52,6 +52,12 @@ namespace HttpApiServer_backend.Tests
             await _context.DisposeAsync();
         }
 
+        ~CatalogServiceTest()
+        {
+            if (_context != null)
+                _context.Dispose();
+        }
+
         [Fact]
         public async Task New_item_added_to_cart()
         {
