@@ -10,7 +10,7 @@ using Xunit;
 
 namespace HttpApiServer_backend.Tests
 {
-    public class CatalogServiceTest
+    public class CatalogServiceTest : IDisposable
     {
         private readonly Mock<IClock> _clock;
         private readonly CatalogService _service;
@@ -47,6 +47,11 @@ namespace HttpApiServer_backend.Tests
             _service = new CatalogService(_clock.Object, _httpClient, _uow);
         }
 
+        public async void Dispose()
+        {
+            await _context.DisposeAsync();
+        }
+
         [Fact]
         public async Task New_item_added_to_cart()
         {
@@ -75,7 +80,6 @@ namespace HttpApiServer_backend.Tests
             var result = carts.First().CartItems.First();
 
             await _connection.CloseAsync();
-            await _context.DisposeAsync();
 
             Assert.Equal(result.ProductId, cartItem.Product.Id);
             Assert.Equal(result.Count, cartItem.Count);
